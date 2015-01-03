@@ -1,7 +1,7 @@
 Type=Exe
-Reference=*\G{00000200-0000-0010-8000-00AA006D2EA4}#2.0#0#C:\Program Files\Common Files\System\ado\msado20.tlb#Microsoft ActiveX Data Objects 2.0 Library
-Reference=*\G{00025E01-0000-0000-C000-000000000046}#4.0#0#..\..\..\archivos de programa\Portable Visual  Basic 6\DAO350.DLL#Microsoft DAO 3.51 Object Library
-Object={831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0; MSCOMCTL.OCX
+Reference=*\G{00000200-0000-0010-8000-00AA006D2EA4}#2.0#0#C:\Program Files (x86)\Common Files\System\ado\msado20.tlb#Microsoft ActiveX Data Objects 2.0 Library
+Reference=*\G{00025E01-0000-0000-C000-000000000046}#4.0#0#..\..\..\Portable Visual  Basic 6\DAO350.DLL#Microsoft DAO 3.51 Object Library
+Object={831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.1#0; MSCOMCTL.OCX
 Form=Client_Create.frm
 Class=C_General_Procedures; C_General_Procedures.cls
 Class=C_CRUD_client; C_CRUD_Client.cls

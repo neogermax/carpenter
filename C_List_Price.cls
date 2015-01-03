@@ -136,3 +136,62 @@ ctrlerr:
 
 End Function
 
+Function Datos_Charge_S()
+
+    Dim NameBD As String
+    Dim Datos() As Variant
+    Dim StringBD As String
+    Dim C_conect As New C_Connections
+  
+    
+    StringBD = C_conect.StringConnect_Access_consult
+   
+     '** CARGAMOS LOS COMBOS **
+    Datos = TRAER_ARRAY_Datos_Charge_S(CStr(StringBD))
+    
+    Datos_Charge_S = Datos
+
+End Function
+
+Function TRAER_ARRAY_Datos_Charge_S(STRINGDECONECCION As String) As Variant
+
+    Dim MYRECORDSET As ADODB.Recordset
+    Dim MYSQL As String
+    Dim I%
+    Dim Datos() As Variant
+    
+    '** DIMENSIONAMOS LA BASE DE DATOS **
+    
+    Set MYRECORDSET = New ADODB.Recordset
+    
+    MYSQL = " SELECT Suppliers_List_Prices.Id, TC_Inputs.Description, TC_Measure.Description, Provider.Name, Suppliers_List_Prices.Description, Suppliers_List_Prices.Id_TC_Inputs, Suppliers_List_Prices.Id_TC_Measure, Suppliers_List_Prices.Id_Provider " & _
+            " FROM ((Suppliers_List_Prices INNER JOIN TC_Inputs ON TC_Inputs.Id = Suppliers_List_Prices.Id_TC_Inputs) " & _
+            " INNER JOIN TC_Measure ON TC_Measure.Id = Suppliers_List_Prices.Id_TC_Measure) " & _
+            " INNER JOIN Provider ON Provider.id = Suppliers_List_Prices.Id_Provider "
+    
+    On Error GoTo ctrlerr
+    MYRECORDSET.Open MYSQL, STRINGDECONECCION
+    I = MYRECORDSET.RecordCount
+    Datos = MYRECORDSET.GetRows
+SALTO:
+    TRAER_ARRAY_Datos_Charge_S = Datos
+    
+    Exit Function
+    
+ctrlerr:
+    
+    Select Case Err.Number
+    
+    Case 3021
+    MsgBox "El cliente ingresado NO existe!!!", vbExclamation + vbOKOnly, "Información!"
+    
+    Case -2147217871
+    GoTo SALTO
+    
+    Case Else
+    MsgBox "Ha ocurrido un error inesperado!" & Chr(13) & "Error " & Err.Number & ": " & Err.Description
+    End Select
+              
+End Function
+
+

@@ -365,6 +365,8 @@ End Sub
 Private Sub BtnCreate_Click()
 
     Dim C_Proc As New C_General_Procedures
+    Dim C_List As New C_List_Price
+    
     Dim validate As Integer
     Dim SL_Prices() As Variant
     
@@ -390,15 +392,15 @@ Private Sub BtnCreate_Click()
             If Q_SL_Prices <> -1 Then
                 
                 'cargamos consulta datos clientes en BD
-                SL_Prices = C_Proc.Datos_Charge("Suppliers_List_Prices", "Add_Descrip")
+                SL_Prices = C_List.Datos_Charge_S()
                 
                 'recorremos el arreglo para verifica si esta repetido
                 For I = 0 To Q_SL_Prices
                     'validamos el campo de cliente o documento
-                    If SL_Prices(1, I) = UCase(TxtDescription.Text) Then
-                        MsgBox "el Insumo " & TxtDescription.Text & "   ya existe en la base de datos!!!", vbInformation + vbOKOnly, "Información!"
+                    If SL_Prices(1, I) = UCase(CbnImputs.Text) And SL_Prices(2, I) = UCase(CbnMeasure.Text) And SL_Prices(3, I) = UCase(CbnProvider.Text) And SL_Prices(4, I) = UCase(TxtDescription.Text) Then
+                        MsgBox "el Insumo " & TxtDescription.Text & " del proveedor " & CbnProvider.Text & " ya existe en la base de datos!!!", vbInformation + vbOKOnly, "Información!"
                         LblhelpGeneral.Visible = True
-                        LblhelpGeneral.Caption = "el Insumo  " & TxtDescription.Text & "   ya existe en la base de datos!!!"
+                        LblhelpGeneral.Caption = "el Insumo " & TxtDescription.Text & " del proveedor " & CbnProvider.Text & " ya existe en la base de datos!!!"
                         LblhelpGeneral.ForeColor = &H80&
                         Exit Sub
                     End If
