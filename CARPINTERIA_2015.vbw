@@ -1,0 +1,9 @@
+Client_Crud = 200, 200, 1054, 650, , 25, 25, 879, 475, C
+C_General_Procedures = 0, 0, 854, 450, 
+C_CRUD_client = 125, 125, 979, 575, 
+MenuCarpenter = 125, 125, 979, 575, , 100, 100, 954, 556, C
+C_Connections = 225, 225, 1076, 675, 
+Provider_Crud = 50, 50, 1068, 373, , 50, 50, 901, 500, C
+C_CRUD_Provider = 175, 175, 1026, 625, 
+List_Price = 175, 175, 1026, 625, Z, 150, 150, 1001, 600, C
+C_List_Price = 200, 200, 1051, 650, 
