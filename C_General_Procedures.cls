@@ -96,7 +96,7 @@ ctrlerr:
     GoTo SALTO
     
     Case Else
-    MsgBox "Ha ocurrido un error inesperado!" & Chr(13) & "Error " & Err.Number & ": " & Err.Description
+    MsgBox "Ha ocurrido un error inesperado!" & Chr(13) & "Error " & Err.Number & ": " & Err.description
     End Select
 
 End Function
@@ -168,7 +168,7 @@ ctrlerr:
     GoTo SALTO
     
     Case Else
-    MsgBox "Ha ocurrido un error inesperado!" & Chr(13) & "Error " & Err.Number & ": " & Err.Description
+    MsgBox "Ha ocurrido un error inesperado!" & Chr(13) & "Error " & Err.Number & ": " & Err.description
     End Select
               
 End Function
@@ -213,7 +213,46 @@ ctrlerr:
     
     
     Case Else
-    MsgBox "Ha ocurrido un error inesperado!" & Chr(13) & "Error " & Err.Number & ": " & Err.Description
+    MsgBox "Ha ocurrido un error inesperado!" & Chr(13) & "Error " & Err.Number & ": " & Err.description
+    End Select
+
+End Function
+
+Function Recover_Id_Detail(TABLA As String, DateSearch As String, IdInput As String) As Integer
+    
+    Dim MyCon As New ADODB.Connection
+    Dim Myrs As New ADODB.Recordset
+    Dim StringBD As String
+    Dim TOTAL As Integer
+    Dim C_conect As New C_Connections
+       
+    TOTAL = 0
+    StringBD = C_conect.StringConnect_Access_consult
+   
+    On Error GoTo ctrlerr
+    MyCon.Open StringBD
+    
+        Myrs.Open "select " & TABLA & ".id from " & TABLA & " where  (((" & TABLA & ".Description)= '" & DateSearch & "') AND ((" & TABLA & ".Id_TC_Inputs)= " & IdInput & ")); ", MyCon, adOpenDynamic, adLockPessimistic
+    
+    TOTAL = Myrs.Fields(0)
+    
+    Myrs.Close
+    MyCon.Close
+
+    Recover_Id_Detail = TOTAL
+  
+    Exit Function
+    
+ctrlerr:
+    
+    Select Case Err.Number
+    
+    Case 3021
+    MsgBox "No se encontro id seleccionado!!!", vbExclamation + vbOKOnly, "Información!"
+    
+    
+    Case Else
+    MsgBox "Ha ocurrido un error inesperado!" & Chr(13) & "Error " & Err.Number & ": " & Err.description
     End Select
 
 End Function

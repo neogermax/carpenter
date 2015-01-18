@@ -1,19 +1,47 @@
 VERSION 5.00
+Object = "{5E9E78A0-531B-11CF-91F6-C2863C385E30}#1.0#0"; "msflxgrd.ocx"
 Begin VB.Form List_Price 
    BackColor       =   &H80000012&
-   BorderStyle     =   4  'Fixed ToolWindow
-   ClientHeight    =   4665
+   BorderStyle     =   1  'Fixed Single
+   ClientHeight    =   6225
    ClientLeft      =   15
    ClientTop       =   15
-   ClientWidth     =   10320
+   ClientWidth     =   10245
    ControlBox      =   0   'False
    LinkTopic       =   "Form1"
    MaxButton       =   0   'False
    MDIChild        =   -1  'True
    MinButton       =   0   'False
-   ScaleHeight     =   4665
-   ScaleWidth      =   10320
-   ShowInTaskbar   =   0   'False
+   ScaleHeight     =   6225
+   ScaleWidth      =   10245
+   Begin MSFlexGridLib.MSFlexGrid GridList 
+      Height          =   1095
+      Left            =   120
+      TabIndex        =   21
+      Top             =   4680
+      Width           =   9975
+      _ExtentX        =   17595
+      _ExtentY        =   1931
+      _Version        =   393216
+      Rows            =   1
+      FixedCols       =   0
+      ForeColor       =   8388608
+      BackColorFixed  =   0
+      ForeColorFixed  =   65280
+      BackColorSel    =   16776960
+      ForeColorSel    =   -2147483630
+      BackColorBkg    =   0
+      GridColorFixed  =   65280
+      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "Verdana"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+   End
    Begin VB.CommandButton BtnCreate 
       BackColor       =   &H00808080&
       Height          =   495
@@ -275,13 +303,15 @@ Private Sub Form_Load()
     Dim provider() As Variant
     Dim Inputs() As Variant
       
-    'ocultar mensajes de validacion
+    List_Price.Height = 4665
+    'ocultar controles
     LblhelpProvider.Visible = False
     LblhelpInput.Visible = False
     LblhelpMeasure.Visible = False
     LblhelpDescription.Visible = False
     LblhelpValue.Visible = False
     LblhelpGeneral.Visible = False
+    GridList.Visible = False
           
     'cargamos consulta datos proveedores en BD
     provider = C_Proc.Datos_Charge("Provider", "Add_Name")
@@ -305,6 +335,17 @@ Private Sub Form_Load()
     Next
         
     CbnMeasure.Enabled = False
+    
+    'dimencionamos el numero de columnas del grid
+    GridList.Cols = GridList.Cols + 3
+    
+    'cargo titulos del grid
+    GridList.TextMatrix(0, 0) = "Proveedor"
+    GridList.TextMatrix(0, 1) = "Insumo"
+    GridList.TextMatrix(0, 2) = "Medida"
+    GridList.TextMatrix(0, 3) = "Descripción"
+    GridList.TextMatrix(0, 4) = "Valor"
+    
 End Sub
 
 'para desbloquear el combo de medidas
@@ -317,14 +358,14 @@ Private Sub CbnImputs_lostFocus()
 
    Dim C_ListInt As New C_List_Price
    Dim IndexInputs As Integer
-   Dim listInt() As Variant
+   Dim ListInt() As Variant
     
    CbnMeasure.clear
    
    IndexInputs = CbnImputs.ListIndex
    
    'cargamos consulta datos medidas según el insumo solicitado en BD
-   listInt = C_ListInt.Measure(IndexInputs)
+   ListInt = C_ListInt.Measure(IndexInputs)
    
    'traemos la cantidad de medidas según el insumo solicitado en BD
    Q_Measure = C_ListInt.Q_Measure(IndexInputs)
@@ -332,7 +373,7 @@ Private Sub CbnImputs_lostFocus()
    
    'cargamos el combo con los datos seleccionados
    For I = 0 To Q_Measure
-          CbnMeasure.AddItem listInt(1, I)
+          CbnMeasure.AddItem ListInt(1, I)
    Next
     
 End Sub
@@ -355,12 +396,6 @@ End Sub
 Private Sub BtnExit_Click()
     Unload List_Price
 End Sub
-
-' traer los datos para editar
-Private Sub BtnSearch_Click()
-
-End Sub
-
 
 Private Sub BtnCreate_Click()
 
@@ -414,6 +449,7 @@ Private Sub BtnCreate_Click()
             Case "CREAR INSUMO"
                 'llamar la funcion de insertar en la BD
                 Call Insert
+                                   
             
             Case "MODIFICAR INSUMO"
                  'llamar la funcion de modificar en la BD
@@ -422,6 +458,7 @@ Private Sub BtnCreate_Click()
             Case Else
         
         End Select
+            
         
     End If
     
@@ -450,7 +487,7 @@ Function Insert()
         LblhelpGeneral.Visible = True
         LblhelpGeneral.Caption = "Insumo creado con exito!"
         LblhelpGeneral.ForeColor = &H8000&
-        clear
+        InsertGrid
         
     Else
     
@@ -490,7 +527,7 @@ Function Update()
         LblhelpGeneral.Visible = True
         LblhelpGeneral.Caption = "Cliente ha sido modificado con exito!"
         LblhelpGeneral.ForeColor = &H8000&
-        clear
+        InsertGrid
         
     Else
     
@@ -510,7 +547,7 @@ Function ValidateCampos()
     'instanciamos variables
     Dim valProvider As Integer
     Dim valInput As Integer
-    Dim valMeasure As Integer
+    Dim valmeasure As Integer
     Dim valDescription As Integer
     Dim valValues As Integer
     Dim Valide_Total As Integer
@@ -518,7 +555,7 @@ Function ValidateCampos()
     'inicializamos en 0
     valProvider = 0
     valInput = 0
-    valMeasure = 0
+    valmeasure = 0
     valDescription = 0
     valValues = 0
     Valide_Total = 0
@@ -531,7 +568,7 @@ Function ValidateCampos()
           valInput = 1
     End If
     If CbnMeasure.Text = "Seleccione..." Then
-          valMeasure = 1
+          valmeasure = 1
     End If
     If TxtDescription.Text = "" Then
           valDescription = 1
@@ -541,7 +578,7 @@ Function ValidateCampos()
     End If
 
     'verificamos validacion anterior
-    If valProvider = 1 Or valInput = 1 Or valMeasure = 1 Or valDescription = 1 Or valValues = 1 Then
+    If valProvider = 1 Or valInput = 1 Or valmeasure = 1 Or valDescription = 1 Or valValues = 1 Then
     
         Valide_Total = 1
         
@@ -556,7 +593,7 @@ Function ValidateCampos()
         Else
             LblhelpInput.Visible = False
         End If
-        If valMeasure = 1 Then
+        If valmeasure = 1 Then
             LblhelpMeasure.Visible = True
         Else
             LblhelpMeasure.Visible = False
@@ -582,6 +619,42 @@ Function ValidateCampos()
     End If
 
     ValidateCampos = Valide_Total
+    
+End Function
+
+Function InsertGrid()
+
+    Dim Pos_Grid As Integer
+    
+    List_Price.Height = 6250
+    
+    'habilitamos el grid
+    GridList.Visible = True
+    'agregamos una nueva fila
+    GridList.Rows = GridList.Rows + 1
+    
+    'asignamos la posicion del grid
+    Pos_Grid = GridList.Rows - 1
+    
+    'cargamos los datos
+    GridList.TextMatrix(Pos_Grid, 0) = UCase(CbnProvider.Text)
+    GridList.TextMatrix(Pos_Grid, 1) = UCase(CbnImputs.Text)
+    GridList.TextMatrix(Pos_Grid, 2) = UCase(CbnMeasure.Text)
+    GridList.TextMatrix(Pos_Grid, 3) = UCase(TxtDescription.Text)
+    GridList.TextMatrix(Pos_Grid, 4) = TxtValues.Text
+        
+    'redimencionamos el tamaño de las columnas a los datos digitados
+    For Row = 0 To GridList.Rows - 1
+        For Col = 0 To GridList.Cols - 1
+            GridList.ColWidth(Col) = IIf(Me.TextWidth(GridList.TextMatrix(Row, Col)) + 400 > GridList.ColWidth(Col), Me.TextWidth(GridList.TextMatrix(Row, Col)) + 400, GridList.ColWidth(Col))
+        Next
+    Next
+    
+    'alineamos columnas disparejas
+    GridList.ColAlignment(2) = 1
+    GridList.ColAlignment(4) = 4
+    'llamamos funcion limpiar
+    clear
     
 End Function
 

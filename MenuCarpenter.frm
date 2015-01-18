@@ -42,12 +42,22 @@ Begin VB.MDIForm MenuCarpenter
          Caption         =   "&Editar Insumo"
       End
    End
+   Begin VB.Menu Module_sale 
+      Caption         =   "&Modulo de Venta"
+      Begin VB.Menu invoice 
+         Caption         =   "&Facturación"
+      End
+      Begin VB.Menu quotation 
+         Caption         =   "&Cotización"
+      End
+   End
 End
 Attribute VB_Name = "MenuCarpenter"
 Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
+
 
 Private Sub MDIForm_Load()
 
@@ -185,13 +195,44 @@ End Sub
 
 Private Sub InputsUpdate_Click()
 
-    Load List_Price
-    List_Price.Left = (MenuCarpenter.ScaleWidth - List_Price.Width) / 2
-    List_Price.Top = (MenuCarpenter.ScaleHeight - List_Price.Height) / 2
-    List_Price.Caption = "Nuevo Insumo"
-    List_Price.BtnCreate.Caption = "MODIFICAR INSUMO"
-    List_Price.BtnSearch.Visible = True
-    List_Price.Show
+    Load List_PriceEdit
+    List_PriceEdit.Left = (MenuCarpenter.ScaleWidth - List_PriceEdit.Width) / 2
+    List_PriceEdit.Top = (MenuCarpenter.ScaleHeight - List_PriceEdit.Height) / 2
+    List_PriceEdit.Caption = "Nuevo Insumo"
+    List_PriceEdit.BtnCreate.Caption = "MODIFICAR INSUMO"
+    List_PriceEdit.BtnSearch.Visible = True
+    List_PriceEdit.Show
     
+End Sub
+
+'---------------------------------- modulo venta------------------------------------------------
+Private Sub invoice_Click()
+
+    Load InvoiceAndQuotation
+    InvoiceAndQuotation.Left = (MenuCarpenter.ScaleWidth - InvoiceAndQuotation.Width) / 2
+    InvoiceAndQuotation.Top = (MenuCarpenter.ScaleHeight - InvoiceAndQuotation.Height) / 2
+    InvoiceAndQuotation.Caption = "Facturación el ebanista"
+    InvoiceAndQuotation.FrmClient.Caption = "Escoja el cliente para Facturación"
+    InvoiceAndQuotation.FrmCapture.Caption = "Escoja materiales para Facturación"
+    InvoiceAndQuotation.Lbltitle_in.Caption = "FACTURA N°"
+    InvoiceAndQuotation.Opdoc.Value = True
+    InvoiceAndQuotation.OpNot.Value = True
+    InvoiceAndQuotation.Show
+
+End Sub
+
+Private Sub quotation_Click()
+
+    Load InvoiceAndQuotation
+    InvoiceAndQuotation.Left = (MenuCarpenter.ScaleWidth - InvoiceAndQuotation.Width) / 2
+    InvoiceAndQuotation.Top = (MenuCarpenter.ScaleHeight - InvoiceAndQuotation.Height) / 2
+    InvoiceAndQuotation.Caption = "Cotización el ebanista"
+    InvoiceAndQuotation.FrmClient.Caption = "Escoja el cliente para Cotización"
+    InvoiceAndQuotation.FrmCapture.Caption = "Escoja materiales para Cotización"
+    InvoiceAndQuotation.Lbltitle_in.Caption = "COTIZACIÓN N°"
+    InvoiceAndQuotation.Opdoc.Value = True
+    InvoiceAndQuotation.OpNot.Value = True
+    InvoiceAndQuotation.Show
+
 End Sub
 

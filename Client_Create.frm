@@ -1,11 +1,12 @@
 VERSION 5.00
+Object = "{5E9E78A0-531B-11CF-91F6-C2863C385E30}#1.0#0"; "msflxgrd.ocx"
 Begin VB.Form Client_Crud 
    BackColor       =   &H80000007&
-   BorderStyle     =   4  'Fixed ToolWindow
+   BorderStyle     =   1  'Fixed Single
    Caption         =   " "
-   ClientHeight    =   6135
+   ClientHeight    =   7515
    ClientLeft      =   45
-   ClientTop       =   315
+   ClientTop       =   375
    ClientWidth     =   12780
    ControlBox      =   0   'False
    KeyPreview      =   -1  'True
@@ -13,9 +14,8 @@ Begin VB.Form Client_Crud
    MaxButton       =   0   'False
    MDIChild        =   -1  'True
    MinButton       =   0   'False
-   ScaleHeight     =   6135
+   ScaleHeight     =   7515
    ScaleWidth      =   12780
-   ShowInTaskbar   =   0   'False
    Begin VB.Frame FrmBody 
       BackColor       =   &H80000007&
       Height          =   3855
@@ -307,6 +307,34 @@ Begin VB.Form Client_Crud
       Top             =   5400
       Width           =   2295
    End
+   Begin MSFlexGridLib.MSFlexGrid GridList 
+      Height          =   1095
+      Left            =   120
+      TabIndex        =   28
+      Top             =   6120
+      Width           =   12495
+      _ExtentX        =   22040
+      _ExtentY        =   1931
+      _Version        =   393216
+      Rows            =   1
+      FixedCols       =   0
+      ForeColor       =   8388608
+      BackColorFixed  =   0
+      ForeColorFixed  =   65280
+      BackColorSel    =   16776960
+      ForeColorSel    =   -2147483630
+      BackColorBkg    =   0
+      GridColorFixed  =   65280
+      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "Verdana"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+   End
    Begin VB.Label LblhelpGeneral 
       Alignment       =   2  'Center
       BackColor       =   &H00E0E0E0&
@@ -353,6 +381,8 @@ Private Sub Form_Load()
     LblhelpEmail.Visible = False
     LblEditCrud.Visible = False
     
+    Client_Crud.Height = 6495
+    
     'cargamos consulta datos documentos en BD
     Type_doc = C_Proc.Datos_Charge("TC_Document", "Charge")
     
@@ -368,6 +398,17 @@ Private Sub Form_Load()
     Dim Proccess As String
     Proccess = BtnCreate.Caption
     
+     'dimencionamos el numero de columnas del grid
+    GridList.Cols = GridList.Cols + 4
+    
+    'cargo titulos del grid
+    GridList.TextMatrix(0, 0) = "Cliente"
+    GridList.TextMatrix(0, 1) = "N° Documento"
+    GridList.TextMatrix(0, 2) = "Telefono"
+    GridList.TextMatrix(0, 3) = "Dirección"
+    GridList.TextMatrix(0, 4) = "Correo"
+    GridList.TextMatrix(0, 5) = "Observaciones"
+     
 End Sub
 'BOTON PARA CREAR MODIFICAR O ELIMINAR
 Private Sub BtnCreate_Click()
@@ -574,7 +615,8 @@ Function Insert()
         LblhelpGeneral.Visible = True
         LblhelpGeneral.Caption = "Cliente creado con exito!"
         LblhelpGeneral.ForeColor = &H8000&
-        clear
+        InsertGrid
+        
         
     Else
     
@@ -808,6 +850,44 @@ Function block()
     TxtObservations.Enabled = False
     CbnTypeDocument.Enabled = False
 
+End Function
+
+Function InsertGrid()
+
+    Dim Pos_Grid As Integer
+    
+    Client_Crud.Height = 7875
+    
+    'habilitamos el grid
+    GridList.Visible = True
+    'agregamos una nueva fila
+    GridList.Rows = GridList.Rows + 1
+    
+    'asignamos la posicion del grid
+    Pos_Grid = GridList.Rows - 1
+    
+    'cargamos los datos
+    GridList.TextMatrix(Pos_Grid, 0) = UCase(TxtName.Text)
+    GridList.TextMatrix(Pos_Grid, 1) = UCase(TxtDocument.Text)
+    GridList.TextMatrix(Pos_Grid, 2) = UCase(TxtPhone.Text)
+    GridList.TextMatrix(Pos_Grid, 3) = UCase(TxtAddress.Text)
+    GridList.TextMatrix(Pos_Grid, 4) = UCase(TxtEmail.Text)
+    GridList.TextMatrix(Pos_Grid, 5) = UCase(TxtObservations.Text)
+        
+    'redimencionamos el tamaño de las columnas a los datos digitados
+    For Row = 0 To GridList.Rows - 1
+        For Col = 0 To GridList.Cols - 1
+            GridList.ColWidth(Col) = IIf(Me.TextWidth(GridList.TextMatrix(Row, Col)) + 400 > GridList.ColWidth(Col), Me.TextWidth(GridList.TextMatrix(Row, Col)) + 400, GridList.ColWidth(Col))
+        Next
+    Next
+    
+    'alineamos columnas disparejas
+    GridList.ColAlignment(1) = 4
+    GridList.ColAlignment(2) = 4
+    
+    'llamamos funcion limpiar
+    clear
+    
 End Function
 ''''''----------- REGION FUNCIONES
 
