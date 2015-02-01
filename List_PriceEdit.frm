@@ -3,7 +3,7 @@ Object = "{5E9E78A0-531B-11CF-91F6-C2863C385E30}#1.0#0"; "msflxgrd.ocx"
 Begin VB.Form List_PriceEdit 
    BackColor       =   &H80000007&
    BorderStyle     =   1  'Fixed Single
-   ClientHeight    =   4725
+   ClientHeight    =   5925
    ClientLeft      =   15
    ClientTop       =   15
    ClientWidth     =   10260
@@ -12,71 +12,75 @@ Begin VB.Form List_PriceEdit
    MaxButton       =   0   'False
    MDIChild        =   -1  'True
    MinButton       =   0   'False
-   ScaleHeight     =   4725
+   Picture         =   "List_PriceEdit.frx":0000
+   ScaleHeight     =   5925
    ScaleWidth      =   10260
-   Begin VB.Frame FrmBody 
-      BackColor       =   &H80000012&
-      ForeColor       =   &H0000FF00&
-      Height          =   2175
+   Begin VB.PictureBox FrmBody 
+      BorderStyle     =   0  'None
+      Height          =   2055
       Left            =   120
-      TabIndex        =   10
-      Top             =   0
+      Picture         =   "List_PriceEdit.frx":26EAE
+      ScaleHeight     =   2055
+      ScaleWidth      =   9975
+      TabIndex        =   11
+      Top             =   120
       Width           =   9975
-      Begin VB.ComboBox CbnDescription 
-         Height          =   315
-         Left            =   1320
-         TabIndex        =   22
-         Text            =   "Seleccione..."
-         Top             =   1680
-         Width           =   4695
+      Begin VB.CommandButton BtnSearch 
+         Caption         =   "BUSCAR"
+         BeginProperty Font 
+            Name            =   "Century Gothic"
+            Size            =   9
+            Charset         =   0
+            Weight          =   700
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   375
+         Left            =   8640
+         Picture         =   "List_PriceEdit.frx":4DD5C
+         Style           =   1  'Graphical
+         TabIndex        =   24
+         Top             =   840
+         Width           =   1215
       End
-      Begin VB.ComboBox CbnProvider 
+      Begin VB.ComboBox CbnMeasure 
          Height          =   315
-         Left            =   1320
-         TabIndex        =   14
+         Left            =   1440
+         TabIndex        =   15
          Text            =   "Seleccione..."
-         Top             =   240
+         Top             =   1080
          Width           =   4695
       End
       Begin VB.ComboBox CbnImputs 
          Height          =   315
-         Left            =   1320
+         Left            =   1440
+         TabIndex        =   14
+         Text            =   "Seleccione..."
+         Top             =   600
+         Width           =   4695
+      End
+      Begin VB.ComboBox CbnProvider 
+         Height          =   315
+         Left            =   1440
          TabIndex        =   13
          Text            =   "Seleccione..."
-         Top             =   720
+         Top             =   120
          Width           =   4695
       End
-      Begin VB.ComboBox CbnMeasure 
+      Begin VB.ComboBox CbnDescription 
          Height          =   315
-         Left            =   1320
+         Left            =   1440
          TabIndex        =   12
          Text            =   "Seleccione..."
-         Top             =   1200
+         Top             =   1560
          Width           =   4695
       End
-      Begin VB.CommandButton BtnSearch 
-         Caption         =   "BUSCAR"
-         Height          =   495
-         Left            =   8400
-         TabIndex        =   11
-         Top             =   600
-         Width           =   1455
-      End
-      Begin VB.Label LblDescriptionC 
-         BackStyle       =   0  'Transparent
-         Caption         =   "insumos a modificar"
-         ForeColor       =   &H0000FF00&
-         Height          =   375
-         Left            =   240
-         TabIndex        =   24
-         Top             =   1680
-         Width           =   1215
-      End
-      Begin VB.Label LblHelpNewdescription 
+      Begin VB.Label LblhelpMeasure 
          BackStyle       =   0  'Transparent
          Caption         =   "<-- Campo Obligatorio!"
          BeginProperty Font 
-            Name            =   "MS Sans Serif"
+            Name            =   "Verdana"
             Size            =   8.25
             Charset         =   0
             Weight          =   700
@@ -84,67 +88,18 @@ Begin VB.Form List_PriceEdit
             Italic          =   0   'False
             Strikethrough   =   0   'False
          EndProperty
-         ForeColor       =   &H00FFFF00&
+         ForeColor       =   &H0000FF00&
          Height          =   255
          Left            =   6240
          TabIndex        =   23
-         Top             =   1680
-         Width           =   2415
-      End
-      Begin VB.Label LblProvider 
-         BackStyle       =   0  'Transparent
-         Caption         =   "Proveedor"
-         ForeColor       =   &H0000FF00&
-         Height          =   375
-         Left            =   240
-         TabIndex        =   20
-         Top             =   240
-         Width           =   1455
-      End
-      Begin VB.Label LblMaterials 
-         BackStyle       =   0  'Transparent
-         Caption         =   "Insumo"
-         ForeColor       =   &H0000FF00&
-         Height          =   375
-         Left            =   240
-         TabIndex        =   19
-         Top             =   720
-         Width           =   1335
-      End
-      Begin VB.Label LblMeasure 
-         BackStyle       =   0  'Transparent
-         Caption         =   "Medida"
-         ForeColor       =   &H0000FF00&
-         Height          =   375
-         Left            =   240
-         TabIndex        =   18
-         Top             =   1200
-         Width           =   1215
-      End
-      Begin VB.Label LblhelpProvider 
-         BackStyle       =   0  'Transparent
-         Caption         =   "<-- Campo Obligatorio!"
-         BeginProperty Font 
-            Name            =   "MS Sans Serif"
-            Size            =   8.25
-            Charset         =   0
-            Weight          =   700
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
-         ForeColor       =   &H00FFFF00&
-         Height          =   255
-         Left            =   6240
-         TabIndex        =   17
-         Top             =   240
+         Top             =   1080
          Width           =   2415
       End
       Begin VB.Label LblhelpInput 
          BackStyle       =   0  'Transparent
          Caption         =   "<-- Campo Obligatorio!"
          BeginProperty Font 
-            Name            =   "MS Sans Serif"
+            Name            =   "Verdana"
             Size            =   8.25
             Charset         =   0
             Weight          =   700
@@ -152,18 +107,18 @@ Begin VB.Form List_PriceEdit
             Italic          =   0   'False
             Strikethrough   =   0   'False
          EndProperty
-         ForeColor       =   &H00FFFF00&
+         ForeColor       =   &H0000FF00&
          Height          =   255
          Left            =   6240
-         TabIndex        =   16
-         Top             =   720
+         TabIndex        =   22
+         Top             =   600
          Width           =   2415
       End
-      Begin VB.Label LblhelpMeasure 
+      Begin VB.Label LblhelpProvider 
          BackStyle       =   0  'Transparent
          Caption         =   "<-- Campo Obligatorio!"
          BeginProperty Font 
-            Name            =   "MS Sans Serif"
+            Name            =   "Verdana"
             Size            =   8.25
             Charset         =   0
             Weight          =   700
@@ -171,80 +126,138 @@ Begin VB.Form List_PriceEdit
             Italic          =   0   'False
             Strikethrough   =   0   'False
          EndProperty
-         ForeColor       =   &H00FFFF00&
+         ForeColor       =   &H0000FF00&
          Height          =   255
          Left            =   6240
-         TabIndex        =   15
-         Top             =   1200
+         TabIndex        =   21
+         Top             =   120
          Width           =   2415
+      End
+      Begin VB.Label LblMeasure 
+         BackStyle       =   0  'Transparent
+         Caption         =   "Medida"
+         BeginProperty Font 
+            Name            =   "Verdana"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         ForeColor       =   &H00FFFFFF&
+         Height          =   375
+         Left            =   360
+         TabIndex        =   20
+         Top             =   1080
+         Width           =   1215
+      End
+      Begin VB.Label LblMaterials 
+         BackStyle       =   0  'Transparent
+         Caption         =   "Insumo"
+         BeginProperty Font 
+            Name            =   "Verdana"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         ForeColor       =   &H00FFFFFF&
+         Height          =   375
+         Left            =   360
+         TabIndex        =   19
+         Top             =   600
+         Width           =   1335
+      End
+      Begin VB.Label LblProvider 
+         BackStyle       =   0  'Transparent
+         Caption         =   "Proveedor"
+         BeginProperty Font 
+            Name            =   "Verdana"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         ForeColor       =   &H00FFFFFF&
+         Height          =   375
+         Left            =   360
+         TabIndex        =   18
+         Top             =   120
+         Width           =   1455
+      End
+      Begin VB.Label LblHelpNewdescription 
+         BackStyle       =   0  'Transparent
+         Caption         =   "<-- Campo Obligatorio!"
+         BeginProperty Font 
+            Name            =   "Verdana"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   700
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         ForeColor       =   &H0000FF00&
+         Height          =   255
+         Left            =   6240
+         TabIndex        =   17
+         Top             =   1560
+         Width           =   2415
+      End
+      Begin VB.Label LblDescriptionC 
+         BackStyle       =   0  'Transparent
+         Caption         =   "insumos a modificar"
+         BeginProperty Font 
+            Name            =   "Verdana"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         ForeColor       =   &H00FFFFFF&
+         Height          =   375
+         Left            =   360
+         TabIndex        =   16
+         Top             =   1560
+         Width           =   1215
       End
    End
-   Begin VB.Frame FrmCapture 
-      BackColor       =   &H80000012&
-      ForeColor       =   &H0000FF00&
-      Height          =   1575
+   Begin VB.PictureBox FrmCapture 
+      BorderStyle     =   0  'None
+      Height          =   1335
       Left            =   120
-      TabIndex        =   3
-      Top             =   2160
+      Picture         =   "List_PriceEdit.frx":4F44F
+      ScaleHeight     =   1335
+      ScaleWidth      =   9975
+      TabIndex        =   4
+      Top             =   2280
       Width           =   9975
-      Begin VB.TextBox TxtDescription 
-         Height          =   375
-         Left            =   1080
-         TabIndex        =   5
-         Top             =   360
-         Width           =   5895
-      End
       Begin VB.TextBox TxtValues 
          Height          =   375
-         Left            =   1080
-         TabIndex        =   4
-         Top             =   840
+         Left            =   1440
+         TabIndex        =   6
+         Top             =   720
          Width           =   2295
       End
-      Begin VB.Label LblDescription 
-         BackStyle       =   0  'Transparent
-         Caption         =   "Descripción"
-         ForeColor       =   &H0000FF00&
+      Begin VB.TextBox TxtDescription 
          Height          =   375
-         Left            =   120
-         TabIndex        =   9
-         Top             =   480
-         Width           =   855
-      End
-      Begin VB.Label LblValues 
-         BackStyle       =   0  'Transparent
-         Caption         =   "Valor"
-         ForeColor       =   &H0000FF00&
-         Height          =   375
-         Left            =   120
-         TabIndex        =   8
-         Top             =   960
-         Width           =   855
-      End
-      Begin VB.Label LblhelpDescription 
-         BackStyle       =   0  'Transparent
-         Caption         =   "<-- Campo Obligatorio!"
-         BeginProperty Font 
-            Name            =   "MS Sans Serif"
-            Size            =   8.25
-            Charset         =   0
-            Weight          =   700
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
-         ForeColor       =   &H00FFFF00&
-         Height          =   255
-         Left            =   7200
-         TabIndex        =   7
-         Top             =   480
-         Width           =   2415
+         Left            =   1440
+         TabIndex        =   5
+         Top             =   240
+         Width           =   5895
       End
       Begin VB.Label LblhelpValue 
          BackStyle       =   0  'Transparent
          Caption         =   "<-- Campo Obligatorio!"
          BeginProperty Font 
-            Name            =   "MS Sans Serif"
+            Name            =   "Verdana"
             Size            =   8.25
             Charset         =   0
             Weight          =   700
@@ -252,49 +265,129 @@ Begin VB.Form List_PriceEdit
             Italic          =   0   'False
             Strikethrough   =   0   'False
          EndProperty
-         ForeColor       =   &H00FFFF00&
+         ForeColor       =   &H0000FF00&
          Height          =   255
-         Left            =   3600
-         TabIndex        =   6
-         Top             =   960
+         Left            =   3840
+         TabIndex        =   10
+         Top             =   840
          Width           =   2415
+      End
+      Begin VB.Label LblhelpDescription 
+         BackStyle       =   0  'Transparent
+         Caption         =   "<-- Campo Obligatorio!"
+         BeginProperty Font 
+            Name            =   "Verdana"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   700
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         ForeColor       =   &H0000FF00&
+         Height          =   255
+         Left            =   7440
+         TabIndex        =   9
+         Top             =   360
+         Width           =   2415
+      End
+      Begin VB.Label LblValues 
+         BackStyle       =   0  'Transparent
+         Caption         =   "Valor"
+         BeginProperty Font 
+            Name            =   "Verdana"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         ForeColor       =   &H00FFFFFF&
+         Height          =   375
+         Left            =   240
+         TabIndex        =   8
+         Top             =   840
+         Width           =   855
+      End
+      Begin VB.Label LblDescription 
+         BackStyle       =   0  'Transparent
+         Caption         =   "Descripción"
+         BeginProperty Font 
+            Name            =   "Verdana"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         ForeColor       =   &H00FFFFFF&
+         Height          =   375
+         Left            =   240
+         TabIndex        =   7
+         Top             =   360
+         Width           =   1095
       End
    End
    Begin VB.CommandButton BtnExit 
       Caption         =   "SALIR"
-      Height          =   495
-      Left            =   8520
+      BeginProperty Font 
+         Name            =   "Century Gothic"
+         Size            =   9
+         Charset         =   0
+         Weight          =   700
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      Height          =   375
+      Left            =   8640
+      Picture         =   "List_PriceEdit.frx":762FD
+      Style           =   1  'Graphical
       TabIndex        =   2
-      Top             =   4080
+      Top             =   3960
       Width           =   1455
    End
    Begin VB.CommandButton BtnCreate 
       BackColor       =   &H00808080&
-      Height          =   495
-      Left            =   6120
+      BeginProperty Font 
+         Name            =   "Century Gothic"
+         Size            =   9
+         Charset         =   0
+         Weight          =   700
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      Height          =   375
+      Left            =   6240
       MaskColor       =   &H00FFFFFF&
+      Picture         =   "List_PriceEdit.frx":779F0
+      Style           =   1  'Graphical
       TabIndex        =   1
-      Top             =   4080
+      Top             =   3960
       Width           =   2295
    End
    Begin MSFlexGridLib.MSFlexGrid GridList 
       Height          =   1095
       Left            =   120
       TabIndex        =   0
-      Top             =   4800
+      Top             =   4680
       Width           =   9975
       _ExtentX        =   17595
       _ExtentY        =   1931
       _Version        =   393216
       Rows            =   1
       FixedCols       =   0
-      ForeColor       =   8388608
-      BackColorFixed  =   0
-      ForeColorFixed  =   65280
+      ForeColor       =   4194304
+      BackColorFixed  =   4194304
+      ForeColorFixed  =   16777215
       BackColorSel    =   16776960
-      ForeColorSel    =   -2147483630
-      BackColorBkg    =   0
-      GridColorFixed  =   65280
+      ForeColorSel    =   4194304
+      BackColorBkg    =   4194304
+      GridColor       =   4194304
+      GridColorFixed  =   16777215
       BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
          Name            =   "Verdana"
          Size            =   8.25
@@ -310,8 +403,8 @@ Begin VB.Form List_PriceEdit
       BackColor       =   &H00E0E0E0&
       BorderStyle     =   1  'Fixed Single
       BeginProperty Font 
-         Name            =   "MS Sans Serif"
-         Size            =   8.25
+         Name            =   "Verdana"
+         Size            =   12
          Charset         =   0
          Weight          =   700
          Underline       =   0   'False
@@ -321,9 +414,9 @@ Begin VB.Form List_PriceEdit
       ForeColor       =   &H00C00000&
       Height          =   615
       Left            =   120
-      TabIndex        =   21
-      Top             =   3960
-      Width           =   5775
+      TabIndex        =   3
+      Top             =   3840
+      Width           =   6015
    End
 End
 Attribute VB_Name = "List_PriceEdit"
@@ -585,7 +678,7 @@ Private Sub BtnSearch_Click()
     
         'capturamos el id del registro
         id = C_Proc.Recover_Id("Name", "Provider", CbnProvider.Text)
-    
+       
         IndexMeasure = C_Proc.Recover_Id_Detail("TC_Measure", CbnMeasure.Text, IndexInputs)
   
         ListInt = C_ListInt.Charge_List_View(id, IndexInputs, IndexMeasure, TextDescription, "Detallado")
@@ -620,6 +713,7 @@ Private Sub BtnCreate_Click()
     Dim C_ListInt As New C_List_Price
    
     Dim id As Integer
+    Dim Id_User As Integer
     Dim ListInt() As Variant
 
     Dim validate As Integer
@@ -635,13 +729,14 @@ Private Sub BtnCreate_Click()
         
         LblhelpGeneral.Caption = ""
        
-        Dim guardar As String
-       
+        Dim GUARDAR As String
+        Id_User = C_Proc.Recover_Id("User", "Users", MenuCarpenter.Lbl_Value_User.Caption)
+    
         'actualizar el registro seleccionado
-        guardar = C_ListInt.Update_List(G_Id_Provider, UCase(TxtDescription.Text), UCase(TxtValues.Text))
+        GUARDAR = C_ListInt.Update_List(G_Id_Provider, UCase(TxtDescription.Text), UCase(TxtValues.Text), Id_User)
     
         'validamos el resultado de la operacion anterior
-        If guardar = "OK" Then
+        If GUARDAR = "OK" Then
             
             LblhelpGeneral.Visible = True
             LblhelpGeneral.Caption = "Cliente ha sido modificado con exito!"

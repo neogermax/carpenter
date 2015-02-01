@@ -12,7 +12,7 @@ Attribute VB_Creatable = True
 Attribute VB_PredeclaredId = False
 Attribute VB_Exposed = False
 'crear proveedor en la BD
-Function Add_Provider(Name As String, IdDocument As String, Documents As String, StreetAddress As String, Phone As String, Email As String, Observations As String)
+Function Add_Provider(Name As String, IdDocument As String, Documents As String, StreetAddress As String, Phone As String, Email As String, Observations As String, Id_User As Integer)
     
     On Error GoTo ctrlerr
     
@@ -30,7 +30,7 @@ Function Add_Provider(Name As String, IdDocument As String, Documents As String,
     'ejecutamos la sentecia en la BD
     Set rstusernames = New ADODB.Recordset
         rstusernames.CursorLocation = adUseClient
-        rstusernames.Open "INSERT INTO PROVIDER (Name , IdDocument , Documents , StreetAddress , Phone , Email , Observations ) VALUES( '" & Name & "'," & IdDocument & ",'" & Documents & "','" & StreetAddress & "','" & Phone & "','" & Email & "','" & Observations & "')", STRINGCONECT, adOpenStatic, adLockOptimistic
+        rstusernames.Open "INSERT INTO PROVIDER (Name , IdDocument , Documents , StreetAddress , Phone , Email , Observations,Id_User,CreateDate ) VALUES( '" & Name & "'," & IdDocument & ",'" & Documents & "','" & StreetAddress & "','" & Phone & "','" & Email & "','" & Observations & "'," & Id_User & ",'" & Date & "')", STRINGCONECT, adOpenStatic, adLockOptimistic
     
     dbcon.Close
     
@@ -57,7 +57,7 @@ ctrlerr:
 End Function
 
 'actualizar proveedor en la BD
-Function Update_Provider(id As Integer, Name As String, IdDocument As String, Documents As String, StreetAddress As String, Phone As String, Email As String, Observations As String)
+Function Update_Provider(id As Integer, Name As String, IdDocument As String, Documents As String, StreetAddress As String, Phone As String, Email As String, Observations As String, Id_User As Integer)
     
     On Error GoTo ctrlerr
     
@@ -82,6 +82,8 @@ Function Update_Provider(id As Integer, Name As String, IdDocument As String, Do
                           "', Provider.Phone ='" & Phone & _
                           "', Provider.Email ='" & Email & _
                           "', Provider.Observations ='" & Observations & _
+                          "', Provider.CreateDate='" & Date & _
+                          "', Provider.Id_user ='" & Id_User & _
                           "' where (((Provider.id)=" & id & "));", STRINGCONECT, adOpenStatic, adLockOptimistic
     
     dbcon.Close

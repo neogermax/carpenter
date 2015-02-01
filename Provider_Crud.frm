@@ -3,7 +3,7 @@ Object = "{5E9E78A0-531B-11CF-91F6-C2863C385E30}#1.0#0"; "msflxgrd.ocx"
 Begin VB.Form Provider_Crud 
    BackColor       =   &H80000007&
    BorderStyle     =   1  'Fixed Single
-   ClientHeight    =   7755
+   ClientHeight    =   7260
    ClientLeft      =   15
    ClientTop       =   15
    ClientWidth     =   12735
@@ -12,155 +12,75 @@ Begin VB.Form Provider_Crud
    MaxButton       =   0   'False
    MDIChild        =   -1  'True
    MinButton       =   0   'False
-   ScaleHeight     =   7755
+   Picture         =   "Provider_Crud.frx":0000
+   ScaleHeight     =   7260
    ScaleWidth      =   12735
-   Begin VB.CommandButton BtnCreate 
-      BackColor       =   &H00808080&
-      Height          =   495
-      Left            =   8760
-      MaskColor       =   &H00FFFFFF&
-      TabIndex        =   25
-      Top             =   5400
-      Width           =   2295
-   End
-   Begin VB.CommandButton BtnExit 
-      Caption         =   "SALIR"
-      Height          =   495
-      Left            =   11160
-      TabIndex        =   24
-      Top             =   5400
-      Width           =   1455
-   End
-   Begin VB.Frame FrmClient 
-      BackColor       =   &H80000007&
-      ForeColor       =   &H0000FF00&
-      Height          =   975
-      Left            =   120
-      TabIndex        =   18
-      Top             =   120
-      Width           =   12495
-      Begin VB.OptionButton Opdoc 
-         BackColor       =   &H80000012&
-         Caption         =   "Documento"
-         ForeColor       =   &H0000FF00&
-         Height          =   375
-         Left            =   480
-         TabIndex        =   22
-         Top             =   360
-         Width           =   1215
-      End
-      Begin VB.OptionButton OpName 
-         BackColor       =   &H80000012&
-         Caption         =   "Nombre"
-         ForeColor       =   &H0000FF00&
-         Height          =   375
-         Left            =   1800
-         TabIndex        =   21
-         Top             =   360
-         Width           =   975
-      End
-      Begin VB.ComboBox CbnSearch 
-         Height          =   315
-         ItemData        =   "Provider_Crud.frx":0000
-         Left            =   2760
-         List            =   "Provider_Crud.frx":0002
-         TabIndex        =   20
-         Text            =   "Seleccione..."
-         Top             =   360
-         Width           =   5865
-      End
-      Begin VB.CommandButton BtnSearch 
-         Caption         =   "BUSCAR"
-         Height          =   495
-         Left            =   8880
-         TabIndex        =   19
-         Top             =   240
-         Width           =   1455
-      End
-      Begin VB.Label LblEditCrud 
-         Alignment       =   2  'Center
-         BackStyle       =   0  'Transparent
-         Caption         =   "<-- Debe seleccionar una opción"
-         BeginProperty Font 
-            Name            =   "MS Sans Serif"
-            Size            =   8.25
-            Charset         =   0
-            Weight          =   700
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
-         ForeColor       =   &H00FFFF00&
-         Height          =   495
-         Left            =   10560
-         TabIndex        =   23
-         Top             =   240
-         Width           =   1815
-      End
-   End
-   Begin VB.Frame FrmBody 
-      BackColor       =   &H80000007&
+   Begin VB.PictureBox FrmBody 
+      BorderStyle     =   0  'None
       Height          =   3855
       Left            =   120
-      TabIndex        =   0
-      Top             =   1200
+      Picture         =   "Provider_Crud.frx":26EAE
+      ScaleHeight     =   3855
+      ScaleWidth      =   12495
+      TabIndex        =   10
+      Top             =   960
       Width           =   12495
-      Begin VB.TextBox TxtObservations 
-         Height          =   855
-         Left            =   2040
-         MultiLine       =   -1  'True
-         TabIndex        =   7
-         Top             =   2760
+      Begin VB.TextBox TxtName 
+         Height          =   375
+         Left            =   2160
+         TabIndex        =   17
+         Top             =   240
          Width           =   7095
-      End
-      Begin VB.TextBox TxtEmail 
-         Height          =   375
-         Left            =   2040
-         TabIndex        =   6
-         Top             =   2280
-         Width           =   3375
-      End
-      Begin VB.TextBox TxtAddress 
-         Height          =   375
-         Left            =   2040
-         TabIndex        =   5
-         Top             =   1800
-         Width           =   3375
-      End
-      Begin VB.TextBox TxtPhone 
-         Height          =   375
-         Left            =   2040
-         TabIndex        =   4
-         Top             =   1320
-         Width           =   3375
-      End
-      Begin VB.TextBox TxtDocument 
-         Height          =   375
-         Left            =   5760
-         TabIndex        =   3
-         Top             =   840
-         Width           =   3375
       End
       Begin VB.ComboBox CbnTypeDocument 
          Height          =   315
-         Left            =   2040
-         TabIndex        =   2
+         Left            =   2160
+         TabIndex        =   16
          Text            =   "Seleccione..."
          Top             =   840
          Width           =   2295
       End
-      Begin VB.TextBox TxtName 
+      Begin VB.TextBox TxtDocument 
          Height          =   375
-         Left            =   2040
-         TabIndex        =   1
-         Top             =   240
+         Left            =   5880
+         TabIndex        =   15
+         Top             =   840
+         Width           =   3375
+      End
+      Begin VB.TextBox TxtPhone 
+         Height          =   375
+         Left            =   2160
+         TabIndex        =   14
+         Top             =   1320
+         Width           =   3375
+      End
+      Begin VB.TextBox TxtAddress 
+         Height          =   375
+         Left            =   2160
+         TabIndex        =   13
+         Top             =   1800
+         Width           =   3375
+      End
+      Begin VB.TextBox TxtEmail 
+         Height          =   375
+         Left            =   2160
+         TabIndex        =   12
+         Top             =   2280
+         Width           =   3375
+      End
+      Begin VB.TextBox TxtObservations 
+         Height          =   855
+         Left            =   2160
+         MultiLine       =   -1  'True
+         TabIndex        =   11
+         Top             =   2760
          Width           =   7095
       End
       Begin VB.Label LblhelpEmail 
          BackStyle       =   0  'Transparent
          Caption         =   "<-- El formato del correo no es el correcto falta el (@) o la extencion"
          BeginProperty Font 
-            Name            =   "MS Sans Serif"
+            Name            =   "Verdana"
             Size            =   8.25
             Charset         =   0
             Weight          =   700
@@ -168,18 +88,153 @@ Begin VB.Form Provider_Crud
             Italic          =   0   'False
             Strikethrough   =   0   'False
          EndProperty
-         ForeColor       =   &H00FFFF00&
+         ForeColor       =   &H0000FF00&
          Height          =   255
          Left            =   5640
-         TabIndex        =   27
+         TabIndex        =   28
          Top             =   2400
-         Width           =   6375
+         Width           =   6855
       End
-      Begin VB.Label LlbhelpPhone 
+      Begin VB.Label LblName 
+         BackStyle       =   0  'Transparent
+         Caption         =   "Nombre"
+         BeginProperty Font 
+            Name            =   "Verdana"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         ForeColor       =   &H00FFFFFF&
+         Height          =   255
+         Left            =   240
+         TabIndex        =   27
+         Top             =   360
+         Width           =   1575
+      End
+      Begin VB.Label LblDocument 
+         BackStyle       =   0  'Transparent
+         Caption         =   "Tipo De Documento"
+         BeginProperty Font 
+            Name            =   "Verdana"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         ForeColor       =   &H00FFFFFF&
+         Height          =   255
+         Index           =   0
+         Left            =   240
+         TabIndex        =   26
+         Top             =   840
+         Width           =   1935
+      End
+      Begin VB.Label LblPhone 
+         BackStyle       =   0  'Transparent
+         Caption         =   "Telefono"
+         BeginProperty Font 
+            Name            =   "Verdana"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         ForeColor       =   &H00FFFFFF&
+         Height          =   255
+         Left            =   240
+         TabIndex        =   25
+         Top             =   1320
+         Width           =   1575
+      End
+      Begin VB.Label LblAddress 
+         BackStyle       =   0  'Transparent
+         Caption         =   "Direccion"
+         BeginProperty Font 
+            Name            =   "Verdana"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         ForeColor       =   &H00FFFFFF&
+         Height          =   255
+         Left            =   240
+         TabIndex        =   24
+         Top             =   1800
+         Width           =   1575
+      End
+      Begin VB.Label LblEmail 
+         BackStyle       =   0  'Transparent
+         Caption         =   "Correo Electronico"
+         BeginProperty Font 
+            Name            =   "Verdana"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         ForeColor       =   &H00FFFFFF&
+         Height          =   255
+         Left            =   240
+         TabIndex        =   23
+         Top             =   2280
+         Width           =   1935
+      End
+      Begin VB.Label LblObservations 
+         BackStyle       =   0  'Transparent
+         Caption         =   "Observacion"
+         BeginProperty Font 
+            Name            =   "Verdana"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         ForeColor       =   &H00FFFFFF&
+         Height          =   255
+         Left            =   240
+         TabIndex        =   22
+         Top             =   2760
+         Width           =   1575
+      End
+      Begin VB.Label LblDocumentNumber 
+         BackStyle       =   0  'Transparent
+         Caption         =   "N° Documento"
+         BeginProperty Font 
+            Name            =   "Verdana"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         ForeColor       =   &H00FFFFFF&
+         Height          =   255
+         Index           =   1
+         Left            =   4560
+         TabIndex        =   21
+         Top             =   840
+         Width           =   1335
+      End
+      Begin VB.Label LblhelpName 
          BackStyle       =   0  'Transparent
          Caption         =   "<-- Campo Obligatorio!"
          BeginProperty Font 
-            Name            =   "MS Sans Serif"
+            Name            =   "Verdana"
             Size            =   8.25
             Charset         =   0
             Weight          =   700
@@ -187,18 +242,18 @@ Begin VB.Form Provider_Crud
             Italic          =   0   'False
             Strikethrough   =   0   'False
          EndProperty
-         ForeColor       =   &H00FFFF00&
+         ForeColor       =   &H0000FF00&
          Height          =   255
-         Left            =   5520
-         TabIndex        =   17
-         Top             =   1440
+         Left            =   9480
+         TabIndex        =   20
+         Top             =   360
          Width           =   2415
       End
       Begin VB.Label LblhelpDoc 
          BackStyle       =   0  'Transparent
          Caption         =   "<-- Campo Obligatorio!"
          BeginProperty Font 
-            Name            =   "MS Sans Serif"
+            Name            =   "Verdana"
             Size            =   8.25
             Charset         =   0
             Weight          =   700
@@ -206,18 +261,18 @@ Begin VB.Form Provider_Crud
             Italic          =   0   'False
             Strikethrough   =   0   'False
          EndProperty
-         ForeColor       =   &H00FFFF00&
+         ForeColor       =   &H0000FF00&
          Height          =   255
-         Left            =   9360
-         TabIndex        =   16
+         Left            =   9480
+         TabIndex        =   19
          Top             =   840
          Width           =   2415
       End
-      Begin VB.Label LblhelpName 
+      Begin VB.Label LlbhelpPhone 
          BackStyle       =   0  'Transparent
          Caption         =   "<-- Campo Obligatorio!"
          BeginProperty Font 
-            Name            =   "MS Sans Serif"
+            Name            =   "Verdana"
             Size            =   8.25
             Charset         =   0
             Weight          =   700
@@ -225,104 +280,174 @@ Begin VB.Form Provider_Crud
             Italic          =   0   'False
             Strikethrough   =   0   'False
          EndProperty
-         ForeColor       =   &H00FFFF00&
+         ForeColor       =   &H0000FF00&
          Height          =   255
-         Left            =   9360
-         TabIndex        =   15
-         Top             =   360
+         Left            =   5640
+         TabIndex        =   18
+         Top             =   1440
          Width           =   2415
       End
-      Begin VB.Label LblDocumentNumber 
-         BackStyle       =   0  'Transparent
-         Caption         =   "N° Documento"
-         ForeColor       =   &H0000FF00&
-         Height          =   255
-         Index           =   1
-         Left            =   4440
-         TabIndex        =   14
-         Top             =   840
-         Width           =   1335
-      End
-      Begin VB.Label LblObservations 
-         BackStyle       =   0  'Transparent
-         Caption         =   "Observacion"
-         ForeColor       =   &H0000FF00&
-         Height          =   255
-         Left            =   120
-         TabIndex        =   13
-         Top             =   2760
-         Width           =   1575
-      End
-      Begin VB.Label LblEmail 
-         BackStyle       =   0  'Transparent
-         Caption         =   "Correo Electronico"
-         ForeColor       =   &H0000FF00&
-         Height          =   255
-         Left            =   120
-         TabIndex        =   12
-         Top             =   2280
-         Width           =   1575
-      End
-      Begin VB.Label LblAddress 
-         BackStyle       =   0  'Transparent
-         Caption         =   "Direccion"
-         ForeColor       =   &H0000FF00&
-         Height          =   255
-         Left            =   120
-         TabIndex        =   11
-         Top             =   1800
-         Width           =   1575
-      End
-      Begin VB.Label LblPhone 
-         BackStyle       =   0  'Transparent
-         Caption         =   "Telefono"
-         ForeColor       =   &H0000FF00&
-         Height          =   255
-         Left            =   120
-         TabIndex        =   10
-         Top             =   1320
-         Width           =   1575
-      End
-      Begin VB.Label LblDocument 
-         BackStyle       =   0  'Transparent
-         Caption         =   "Tipo De Documento"
-         ForeColor       =   &H0000FF00&
-         Height          =   255
-         Index           =   0
-         Left            =   120
-         TabIndex        =   9
-         Top             =   840
-         Width           =   1575
-      End
-      Begin VB.Label LblName 
-         BackStyle       =   0  'Transparent
-         Caption         =   "Nombre"
-         ForeColor       =   &H0000FF00&
-         Height          =   255
-         Left            =   120
+   End
+   Begin VB.PictureBox FrmClient 
+      BorderStyle     =   0  'None
+      Height          =   975
+      Left            =   120
+      Picture         =   "Provider_Crud.frx":4DD5C
+      ScaleHeight     =   975
+      ScaleWidth      =   12495
+      TabIndex        =   4
+      Top             =   120
+      Width           =   12495
+      Begin VB.CommandButton BtnSearch 
+         Caption         =   "BUSCAR"
+         BeginProperty Font 
+            Name            =   "Century Gothic"
+            Size            =   9
+            Charset         =   0
+            Weight          =   700
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   375
+         Left            =   8760
+         MaskColor       =   &H00FFFFFF&
+         Picture         =   "Provider_Crud.frx":74C0A
+         Style           =   1  'Graphical
          TabIndex        =   8
-         Top             =   360
-         Width           =   1575
+         Top             =   240
+         Width           =   1455
       End
+      Begin VB.ComboBox CbnSearch 
+         Height          =   315
+         ItemData        =   "Provider_Crud.frx":762FD
+         Left            =   2640
+         List            =   "Provider_Crud.frx":762FF
+         TabIndex        =   7
+         Text            =   "Seleccione..."
+         Top             =   240
+         Width           =   5865
+      End
+      Begin VB.OptionButton OpName 
+         BackColor       =   &H00400000&
+         Caption         =   "Nombre"
+         BeginProperty Font 
+            Name            =   "Verdana"
+            Size            =   9.75
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         ForeColor       =   &H00400000&
+         Height          =   375
+         Left            =   1320
+         Picture         =   "Provider_Crud.frx":76301
+         Style           =   1  'Graphical
+         TabIndex        =   6
+         Top             =   240
+         Width           =   1215
+      End
+      Begin VB.OptionButton Opdoc 
+         BackColor       =   &H00FFFFFF&
+         Caption         =   "Documento"
+         BeginProperty Font 
+            Name            =   "Verdana"
+            Size            =   9.75
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   375
+         Left            =   0
+         Picture         =   "Provider_Crud.frx":779F4
+         Style           =   1  'Graphical
+         TabIndex        =   5
+         Top             =   240
+         Width           =   1215
+      End
+      Begin VB.Label LblEditCrud 
+         Alignment       =   2  'Center
+         BackStyle       =   0  'Transparent
+         Caption         =   "<-- Debe seleccionar una opción"
+         BeginProperty Font 
+            Name            =   "Verdana"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   700
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         ForeColor       =   &H0000FF00&
+         Height          =   615
+         Left            =   10320
+         TabIndex        =   9
+         Top             =   120
+         Width           =   1815
+      End
+   End
+   Begin VB.CommandButton BtnCreate 
+      BackColor       =   &H00808080&
+      BeginProperty Font 
+         Name            =   "Century Gothic"
+         Size            =   9
+         Charset         =   0
+         Weight          =   700
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      Height          =   375
+      Left            =   8520
+      MaskColor       =   &H00FFFFFF&
+      Picture         =   "Provider_Crud.frx":790E7
+      Style           =   1  'Graphical
+      TabIndex        =   1
+      Top             =   5160
+      Width           =   2295
+   End
+   Begin VB.CommandButton BtnExit 
+      Caption         =   "SALIR"
+      BeginProperty Font 
+         Name            =   "Century Gothic"
+         Size            =   9
+         Charset         =   0
+         Weight          =   700
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      Height          =   375
+      Left            =   10920
+      Picture         =   "Provider_Crud.frx":7A7DA
+      Style           =   1  'Graphical
+      TabIndex        =   0
+      Top             =   5160
+      Width           =   1455
    End
    Begin MSFlexGridLib.MSFlexGrid GridList 
       Height          =   1095
       Left            =   120
-      TabIndex        =   28
-      Top             =   6480
+      TabIndex        =   3
+      Top             =   6000
       Width           =   12495
       _ExtentX        =   22040
       _ExtentY        =   1931
       _Version        =   393216
       Rows            =   1
       FixedCols       =   0
-      ForeColor       =   8388608
-      BackColorFixed  =   0
-      ForeColorFixed  =   65280
+      ForeColor       =   4194304
+      BackColorFixed  =   4194304
+      ForeColorFixed  =   16777215
       BackColorSel    =   16776960
-      ForeColorSel    =   -2147483630
-      BackColorBkg    =   0
-      GridColorFixed  =   65280
+      ForeColorSel    =   4194304
+      BackColorBkg    =   4194304
+      GridColor       =   4194304
+      GridColorFixed  =   16777215
       BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
          Name            =   "Verdana"
          Size            =   8.25
@@ -338,8 +463,8 @@ Begin VB.Form Provider_Crud
       BackColor       =   &H00E0E0E0&
       BorderStyle     =   1  'Fixed Single
       BeginProperty Font 
-         Name            =   "MS Sans Serif"
-         Size            =   8.25
+         Name            =   "Verdana"
+         Size            =   12
          Charset         =   0
          Weight          =   700
          Underline       =   0   'False
@@ -349,9 +474,9 @@ Begin VB.Form Provider_Crud
       ForeColor       =   &H00C00000&
       Height          =   615
       Left            =   120
-      TabIndex        =   26
-      Top             =   5280
-      Width           =   7935
+      TabIndex        =   2
+      Top             =   5040
+      Width           =   8295
    End
 End
 Attribute VB_Name = "Provider_Crud"
@@ -378,7 +503,7 @@ Private Sub Form_Load()
     LblhelpEmail.Visible = False
     LblEditCrud.Visible = False
     
-    Provider_Crud.Height = 6495
+    Provider_Crud.Height = 6000
      
     'cargamos consulta datos documentos en BD
     Type_doc = C_Proc.Datos_Charge("TC_Document", "Charge")
@@ -411,7 +536,7 @@ End Sub
 Private Sub BtnCreate_Click()
 
     Dim C_Proc As New C_General_Procedures
-    Dim Provider() As Variant
+    Dim provider() As Variant
     
     Dim validate As Integer
     'validamos campos de diligenciamiento
@@ -437,12 +562,12 @@ Private Sub BtnCreate_Click()
             If Q_Provider <> -1 Then
                 
                 'cargamos consulta datos proveedores en BD
-                Provider = C_Proc.Datos_Charge("Provider", "Add_Doc")
+                provider = C_Proc.Datos_Charge("Provider", "Add_Doc")
                 
                 'recorremos el arreglo para verifica si esta repetido
                 For I = 0 To Q_Provider
                     'validamos el campo de Providere o documento
-                    If Provider(1, I) = TxtDocument.Text Then
+                    If provider(1, I) = TxtDocument.Text Then
                         MsgBox "el Proveedor  " & TxtName.Text & "   ya existe en la base de datos!!!", vbInformation + vbOKOnly, "Información!"
                         LblhelpGeneral.Visible = True
                         LblhelpGeneral.Caption = "el Proveedor  " & TxtName.Text & "   ya existe en la base de datos!!!"
@@ -600,13 +725,17 @@ End Sub
 Function Insert()
 
     Dim C_Provider As New C_CRUD_Provider
-    Dim guardar As String
-       
+    Dim C_Proc As New C_General_Procedures
+    Dim GUARDAR As String
+    Dim Id_User As Integer
+    
+    Id_User = C_Proc.Recover_Id("User", "Users", MenuCarpenter.Lbl_Value_User.Caption)
+   
     'llamamos la funcion crear PROVEEDOR
-    guardar = C_Provider.Add_Provider(UCase(TxtName.Text), CbnTypeDocument.ListIndex, UCase(TxtDocument.Text), UCase(TxtAddress.Text), UCase(TxtPhone.Text), UCase(TxtEmail.Text), UCase(TxtObservations.Text))
+    GUARDAR = C_Provider.Add_Provider(UCase(TxtName.Text), CbnTypeDocument.ListIndex, UCase(TxtDocument.Text), UCase(TxtAddress.Text), UCase(TxtPhone.Text), UCase(TxtEmail.Text), UCase(TxtObservations.Text), Id_User)
 
     'validamos el resultado de la operacion anterior
-    If guardar = "OK" Then
+    If GUARDAR = "OK" Then
     
         LblhelpGeneral.Visible = True
         LblhelpGeneral.Caption = "El Proveedor creado con exito!"
@@ -628,9 +757,10 @@ Function Update()
 
     Dim C_Provider As New C_CRUD_Provider
     Dim C_Proc As New C_General_Procedures
-    Dim guardar As String
+    Dim GUARDAR As String
     Dim op_Search As String
     Dim id As Integer
+    Dim Id_User As Integer
     
     'averiguar por que metodo buscar el id
     If OpName.Value = True Then
@@ -639,14 +769,16 @@ Function Update()
         op_Search = "Doc"
     End If
    
+    
     'capturamos el id del registro
     id = C_Proc.Recover_Id(op_Search, "Provider", CbnSearch.Text)
+    Id_User = C_Proc.Recover_Id("User", "Users", MenuCarpenter.Lbl_Value_User.Caption)
     
     'actualizar el registro seleccionado
-    guardar = C_Provider.Update_Provider(id, UCase(TxtName.Text), G_IdDocument, UCase(TxtDocument.Text), UCase(TxtAddress.Text), UCase(TxtPhone.Text), UCase(TxtEmail.Text), UCase(TxtObservations.Text))
+    GUARDAR = C_Provider.Update_Provider(id, UCase(TxtName.Text), G_IdDocument, UCase(TxtDocument.Text), UCase(TxtAddress.Text), UCase(TxtPhone.Text), UCase(TxtEmail.Text), UCase(TxtObservations.Text), Id_User)
 
     'validamos el resultado de la operacion anterior
-    If guardar = "OK" Then
+    If GUARDAR = "OK" Then
         
         LblhelpGeneral.Visible = True
         LblhelpGeneral.Caption = "El Proveedor ha sido modificado con exito!"
@@ -669,7 +801,7 @@ Function Delete()
     Dim C_Provider As New C_CRUD_Provider
     Dim C_Proc As New C_General_Procedures
     
-    Dim guardar As String
+    Dim GUARDAR As String
     Dim id As String
     Dim op_Search As String
     
@@ -683,10 +815,10 @@ Function Delete()
    
     'capturamos el id del registro
     id = C_Proc.Recover_Id(op_Search, "Provider", CbnSearch.Text)
-    guardar = C_Provider.Delete_Provider(id)
+    GUARDAR = C_Provider.Delete_Provider(id)
     
     'validamos el resultado de la operacion anterior
-    If guardar = "OK" Then
+    If GUARDAR = "OK" Then
         
         LblhelpGeneral.Visible = True
         LblhelpGeneral.Caption = "El Proveedor ha sido eliminado con exito!"

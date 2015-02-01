@@ -96,7 +96,7 @@ ctrlerr:
     GoTo SALTO
     
     Case Else
-    MsgBox "Ha ocurrido un error inesperado!" & Chr(13) & "Error " & Err.Number & ": " & Err.description
+    MsgBox "Ha ocurrido un error inesperado!" & Chr(13) & "Error " & Err.Number & ": " & Err.Description
     End Select
 
 End Function
@@ -143,6 +143,9 @@ Function TRAER_ARRAY_Datos_Charge(TABLA As String, MODE As String, STRINGDECONEC
         Case "Add_Descrip"
              MYSQL = "SELECT " & TABLA & ".Id, " & TABLA & ".Description From " & TABLA
              
+        Case "User"
+             MYSQL = "SELECT " & TABLA & ".Id, " & TABLA & ".Nick From " & TABLA
+             
         Case Else
         
     End Select
@@ -168,7 +171,7 @@ ctrlerr:
     GoTo SALTO
     
     Case Else
-    MsgBox "Ha ocurrido un error inesperado!" & Chr(13) & "Error " & Err.Number & ": " & Err.description
+    MsgBox "Ha ocurrido un error inesperado!" & Chr(13) & "Error " & Err.Number & ": " & Err.Description
     End Select
               
 End Function
@@ -189,11 +192,20 @@ Function Recover_Id(op_Search As String, TABLA As String, DateSearch As String) 
     On Error GoTo ctrlerr
     MyCon.Open StringBD
     
-    If op_Search = "Name" Then
-        Myrs.Open "select " & TABLA & ".id from " & TABLA & " where  (((" & TABLA & ".Name)= '" & DateSearch & "')); ", MyCon, adOpenDynamic, adLockPessimistic
-    Else
-        Myrs.Open "select " & TABLA & ".id from " & TABLA & " where  (((" & TABLA & ".Documents)= '" & DateSearch & "')); ", MyCon, adOpenDynamic, adLockPessimistic
-    End If
+    Select Case op_Search
+    
+        Case "Name"
+            Myrs.Open "select " & TABLA & ".id from " & TABLA & " where  (((" & TABLA & ".Name)= '" & DateSearch & "')); ", MyCon, adOpenDynamic, adLockPessimistic
+        
+        Case "Doc"
+            Myrs.Open "select " & TABLA & ".id from " & TABLA & " where  (((" & TABLA & ".Documents)= '" & DateSearch & "')); ", MyCon, adOpenDynamic, adLockPessimistic
+        
+        Case "User"
+            Myrs.Open "select " & TABLA & ".id from " & TABLA & " where  (((" & TABLA & ".Nick)= '" & DateSearch & "')); ", MyCon, adOpenDynamic, adLockPessimistic
+            
+        Case Else
+    
+    End Select
     
     TOTAL = Myrs.Fields(0)
     
@@ -213,7 +225,7 @@ ctrlerr:
     
     
     Case Else
-    MsgBox "Ha ocurrido un error inesperado!" & Chr(13) & "Error " & Err.Number & ": " & Err.description
+    MsgBox "Ha ocurrido un error inesperado!" & Chr(13) & "Error " & Err.Number & ": " & Err.Description
     End Select
 
 End Function
@@ -252,7 +264,7 @@ ctrlerr:
     
     
     Case Else
-    MsgBox "Ha ocurrido un error inesperado!" & Chr(13) & "Error " & Err.Number & ": " & Err.description
+    MsgBox "Ha ocurrido un error inesperado!" & Chr(13) & "Error " & Err.Number & ": " & Err.Description
     End Select
 
 End Function
@@ -284,6 +296,46 @@ Function Validate_Numeric(text_value As String)
     Else
          Validate_Numeric = text_value
     End If
+
+End Function
+
+Function Config()
+    
+   Dim StringBD As String
+   Dim C_conect As New C_Connections
+      
+   StringBD = C_conect.StringConnect_Access
+     
+   Dim MYRECORDSET As ADODB.Recordset
+   Dim MYSQL As String
+   Dim I%
+   Dim Datos() As Variant
+    
+   Set MYRECORDSET = New ADODB.Recordset
+    
+   MYSQL = " SELECT Config.WallPaper, Config.Head, Config.Foot " & _
+           " FROM Config " & _
+           " WHERE (((Config.Id)=1));"
+     
+     On Error GoTo ctrlerr
+    MYRECORDSET.Open MYSQL, StringBD
+    I = MYRECORDSET.RecordCount
+    Datos = MYRECORDSET.GetRows
+    Config = Datos
+    
+    Exit Function
+    
+ctrlerr:
+    
+    Select Case Err.Number
+    
+    Case 3021
+    MsgBox "la configuración inicial no esta!!!", vbExclamation + vbOKOnly, "Información!"
+    
+    Case Else
+    MsgBox "Ha ocurrido un error inesperado!" & Chr(13) & "Error " & Err.Number & ": " & Err.Description
+    End Select
+    
 
 End Function
 

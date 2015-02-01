@@ -12,7 +12,7 @@ Attribute VB_Creatable = True
 Attribute VB_PredeclaredId = False
 Attribute VB_Exposed = False
 'crear cliente en la BD
-Function Add_Client(Name As String, IdDocument As String, Documents As String, StreetAddress As String, Phone As String, Email As String, Observations As String)
+Function Add_Client(Name As String, IdDocument As String, Documents As String, StreetAddress As String, Phone As String, Email As String, Observations As String, Id_User As Integer)
     
     On Error GoTo ctrlerr
     
@@ -30,7 +30,7 @@ Function Add_Client(Name As String, IdDocument As String, Documents As String, S
     'ejecutamos la sentecia en la BD
     Set rstusernames = New ADODB.Recordset
         rstusernames.CursorLocation = adUseClient
-        rstusernames.Open "INSERT INTO CLIENT (Name , IdDocument , Documents , StreetAddress , Phone , Email , Observations ) VALUES( '" & Name & "'," & IdDocument & ",'" & Documents & "','" & StreetAddress & "','" & Phone & "','" & Email & "','" & Observations & "')", STRINGCONECT, adOpenStatic, adLockOptimistic
+        rstusernames.Open "INSERT INTO CLIENT (Name , IdDocument , Documents , StreetAddress , Phone , Email , Observations, Id_user, CreateDate) VALUES( '" & Name & "'," & IdDocument & ",'" & Documents & "','" & StreetAddress & "','" & Phone & "','" & Email & "','" & Observations & "'," & Id_User & ",'" & Date & "')", STRINGCONECT, adOpenStatic, adLockOptimistic
     
     dbcon.Close
     
@@ -57,7 +57,7 @@ ctrlerr:
 End Function
 
 'actualizar cliente en la BD
-Function Update_Client(id As Integer, Name As String, IdDocument As String, Documents As String, StreetAddress As String, Phone As String, Email As String, Observations As String)
+Function Update_Client(id As Integer, Name As String, IdDocument As String, Documents As String, StreetAddress As String, Phone As String, Email As String, Observations As String, Id_User As Integer)
     
     On Error GoTo ctrlerr
     
@@ -82,6 +82,8 @@ Function Update_Client(id As Integer, Name As String, IdDocument As String, Docu
                           "', client.Phone ='" & Phone & _
                           "', client.Email ='" & Email & _
                           "', client.Observations ='" & Observations & _
+                          "', client.Id_user =" & Id_User & _
+                          ", client.CreateDate ='" & Date & _
                           "' where (((client.id)=" & id & "));", STRINGCONECT, adOpenStatic, adLockOptimistic
     
     dbcon.Close

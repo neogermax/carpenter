@@ -265,7 +265,7 @@ ctrlerr:
 
 End Function
 
-Function Add_ListInt(CbnProvider As Integer, CbnImputs As Integer, CbnMeasure As Integer, TxtDescription As String, TxtValues As String)
+Function Add_ListInt(CbnProvider As Integer, CbnImputs As Integer, CbnMeasure As Integer, TxtDescription As String, TxtValues As String, Id_User As Integer)
 
  On Error GoTo ctrlerr
     
@@ -283,7 +283,7 @@ Function Add_ListInt(CbnProvider As Integer, CbnImputs As Integer, CbnMeasure As
     'ejecutamos la sentecia en la BD
     Set rstusernames = New ADODB.Recordset
         rstusernames.CursorLocation = adUseClient
-        rstusernames.Open "INSERT INTO Suppliers_List_Prices(Id_TC_Inputs, Id_TC_Measure, Id_Provider , Description, Price)VALUES( " & CbnImputs & "," & CbnMeasure & "," & CbnProvider & ",'" & TxtDescription & "','" & TxtValues & "')", STRINGCONECT, adOpenStatic, adLockOptimistic
+        rstusernames.Open "INSERT INTO Suppliers_List_Prices(Id_TC_Inputs, Id_TC_Measure, Id_Provider , Description, Price, Id_User, CreateDate)VALUES( " & CbnImputs & "," & CbnMeasure & "," & CbnProvider & ",'" & TxtDescription & "','" & TxtValues & "'," & Id_User & ",'" & Date & "')", STRINGCONECT, adOpenStatic, adLockOptimistic
     
     dbcon.Close
     
@@ -311,7 +311,7 @@ ctrlerr:
 
 End Function
 
-Function Update_List(id As String, Description As String, VALUES As String)
+Function Update_List(id As String, Description As String, VALUES As String, Id_User As Integer)
 
      On Error GoTo ctrlerr
     
@@ -331,6 +331,8 @@ Function Update_List(id As String, Description As String, VALUES As String)
         rstusernames.CursorLocation = adUseClient
         rstusernames.Open " update Suppliers_List_Prices set Suppliers_List_Prices.Description ='" & Description & _
                           "', Suppliers_List_Prices.Price ='" & VALUES & _
+                          "', Suppliers_List_Prices.Id_User =" & Id_User & _
+                          ", Suppliers_List_Prices.CreateDate ='" & Date & _
                           "' where (((Suppliers_List_Prices.id)=" & id & "));", STRINGCONECT, adOpenStatic, adLockOptimistic
     
     dbcon.Close

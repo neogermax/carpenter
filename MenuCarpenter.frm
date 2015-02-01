@@ -1,13 +1,148 @@
 VERSION 5.00
 Begin VB.MDIForm MenuCarpenter 
-   AutoShowChildren=   0   'False
-   BackColor       =   &H80000007&
+   BackColor       =   &H00FFFFFF&
    Caption         =   "POS Carpinteria 2015"
-   ClientHeight    =   2355
+   ClientHeight    =   4710
    ClientLeft      =   225
    ClientTop       =   540
-   ClientWidth     =   9570
+   ClientWidth     =   12480
    LinkTopic       =   "MDIForm1"
+   StartUpPosition =   2  'CenterScreen
+   Begin VB.PictureBox Status_Bar 
+      Align           =   2  'Align Bottom
+      BorderStyle     =   0  'None
+      Height          =   495
+      Left            =   0
+      Picture         =   "MenuCarpenter.frx":0000
+      ScaleHeight     =   495
+      ScaleWidth      =   12480
+      TabIndex        =   1
+      Top             =   4215
+      Width           =   12480
+      Begin VB.Timer Tm_In 
+         Interval        =   1000
+         Left            =   17160
+         Top             =   120
+      End
+      Begin VB.Label LblHours 
+         Alignment       =   2  'Center
+         BackStyle       =   0  'Transparent
+         BorderStyle     =   1  'Fixed Single
+         BeginProperty Font 
+            Name            =   "Verdana"
+            Size            =   11.25
+            Charset         =   0
+            Weight          =   700
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         ForeColor       =   &H00400000&
+         Height          =   495
+         Left            =   17760
+         TabIndex        =   7
+         Top             =   0
+         Width           =   1935
+      End
+      Begin VB.Label Lbl_Value_Roll 
+         Alignment       =   2  'Center
+         BackStyle       =   0  'Transparent
+         BorderStyle     =   1  'Fixed Single
+         BeginProperty Font 
+            Name            =   "Verdana"
+            Size            =   11.25
+            Charset         =   0
+            Weight          =   700
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         ForeColor       =   &H00400000&
+         Height          =   495
+         Left            =   3720
+         TabIndex        =   6
+         Top             =   0
+         Width           =   975
+      End
+      Begin VB.Label LblRoll 
+         BackStyle       =   0  'Transparent
+         Caption         =   "Perfil"
+         BeginProperty Font 
+            Name            =   "Verdana"
+            Size            =   9.75
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   255
+         Left            =   3120
+         TabIndex        =   5
+         Top             =   120
+         Width           =   855
+      End
+      Begin VB.Label Lbl_Value_User 
+         Alignment       =   2  'Center
+         BackStyle       =   0  'Transparent
+         BorderStyle     =   1  'Fixed Single
+         BeginProperty Font 
+            Name            =   "Verdana"
+            Size            =   11.25
+            Charset         =   0
+            Weight          =   700
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         ForeColor       =   &H00400000&
+         Height          =   495
+         Left            =   1080
+         TabIndex        =   4
+         Top             =   0
+         Width           =   1935
+      End
+      Begin VB.Label LblUser 
+         BackStyle       =   0  'Transparent
+         Caption         =   "Usuario"
+         BeginProperty Font 
+            Name            =   "Verdana"
+            Size            =   9.75
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   255
+         Left            =   240
+         TabIndex        =   2
+         Top             =   120
+         Width           =   855
+      End
+   End
+   Begin VB.PictureBox PicStretch 
+      Align           =   1  'Align Top
+      BorderStyle     =   0  'None
+      Height          =   495
+      Left            =   0
+      Picture         =   "MenuCarpenter.frx":259F6
+      ScaleHeight     =   495
+      ScaleWidth      =   12480
+      TabIndex        =   0
+      Top             =   0
+      Width           =   12480
+   End
+   Begin VB.PictureBox Picture1 
+      Align           =   1  'Align Top
+      Height          =   0
+      Left            =   0
+      ScaleHeight     =   0
+      ScaleWidth      =   12480
+      TabIndex        =   3
+      Top             =   0
+      Width           =   12480
+   End
    Begin VB.Menu Client 
       Caption         =   "&Clientes"
       WindowList      =   -1  'True
@@ -51,20 +186,36 @@ Begin VB.MDIForm MenuCarpenter
          Caption         =   "&Cotización"
       End
    End
+   Begin VB.Menu AdminUsers 
+      Caption         =   "&Administración de Usuarios"
+      Begin VB.Menu CreateUsers 
+         Caption         =   "Crear"
+      End
+      Begin VB.Menu UpdateUsers 
+         Caption         =   "&Modificar"
+      End
+   End
 End
 Attribute VB_Name = "MenuCarpenter"
 Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
-
+Private Const IMAGESIZE = 0.566893424036281 'BY MAXeXTREME
 
 Private Sub MDIForm_Load()
 
-    On Error GoTo ctrlerr
+   On Error GoTo ctrlerr
+   Dim imagen As String
     
-    MenuCarpenter.WindowState = 2
-   'PicStretch.Picture = LoadPicture(imagen)
+   Dim C_Proc As New C_General_Procedures
+   Dim Config() As Variant
+   
+   Config = C_Proc.Config
+   imagen = Config(0, 0)
+   
+   MenuCarpenter.WindowState = 2
+   PicStretch.Picture = LoadPicture(imagen)
     Exit Sub
     
 ctrlerr:
@@ -80,6 +231,7 @@ ctrlerr:
 
 End Sub
 
+'tamaño de la imagen
 Private Sub MDIForm_Resize()
 
     On Error Resume Next
@@ -95,6 +247,12 @@ Private Sub MDIForm_Resize()
     PicStretch.Visible = False
 
 End Sub
+
+'hora en linea
+Private Sub Tm_In_Timer()
+    LblHours.Caption = Time
+End Sub
+
 '---------------------------------- modulo clientes ------------------------------------------------
 Private Sub ClientCreate_Click()
     
@@ -115,7 +273,6 @@ Private Sub ClientChange_Click()
     Client_Crud.Top = (MenuCarpenter.ScaleHeight - Client_Crud.Height) / 2
     Client_Crud.Caption = "Modificar Datos del Cliente"
     Client_Crud.FrmClient.Visible = True
-    Client_Crud.FrmClient.Caption = "Escoja La opcion:"
     Client_Crud.BtnCreate.Caption = "MODIFICAR CLIENTE"
     Client_Crud.Opdoc.Value = True
     Client_Crud.FrmBody.Visible = False
@@ -130,7 +287,6 @@ Private Sub ClientDelete_Click()
     Client_Crud.Top = (MenuCarpenter.ScaleHeight - Client_Crud.Height) / 2
     Client_Crud.Caption = "Eliminar Datos del Cliente"
     Client_Crud.FrmClient.Visible = True
-    Client_Crud.FrmClient.Caption = "Escoja La opcion:"
     Client_Crud.BtnCreate.Caption = "ELIMINAR CLIENTE"
     Client_Crud.Opdoc.Value = True
     Client_Crud.FrmBody.Visible = False
@@ -138,7 +294,7 @@ Private Sub ClientDelete_Click()
     
 End Sub
 
-'---------------------------------- modulo clientes ------------------------------------------------
+'---------------------------------- modulo proveedores ------------------------------------------------
 Private Sub CreateProvider_Click()
 
     Load Provider_Crud
@@ -158,7 +314,6 @@ Private Sub UpdateProvider_Click()
     Provider_Crud.Top = (MenuCarpenter.ScaleHeight - Provider_Crud.Height) / 2
     Provider_Crud.Caption = "Modificar Datos del Proveedor"
     Provider_Crud.FrmClient.Visible = True
-    Provider_Crud.FrmClient.Caption = "Escoja La opcion:"
     Provider_Crud.BtnCreate.Caption = "MODIFICAR PROVEEDOR"
     Provider_Crud.Opdoc.Value = True
     Provider_Crud.FrmBody.Visible = False
@@ -173,7 +328,6 @@ Private Sub DeleteProvider_Click()
     Provider_Crud.Top = (MenuCarpenter.ScaleHeight - Provider_Crud.Height) / 2
     Provider_Crud.Caption = "Modificar Datos del Proveedor"
     Provider_Crud.FrmClient.Visible = True
-    Provider_Crud.FrmClient.Caption = "Escoja La opcion:"
     Provider_Crud.BtnCreate.Caption = "ELIMINAR PROVEEDOR"
     Provider_Crud.Opdoc.Value = True
     Provider_Crud.FrmBody.Visible = False
@@ -212,13 +366,13 @@ Private Sub invoice_Click()
     InvoiceAndQuotation.Left = (MenuCarpenter.ScaleWidth - InvoiceAndQuotation.Width) / 2
     InvoiceAndQuotation.Top = (MenuCarpenter.ScaleHeight - InvoiceAndQuotation.Height) / 2
     InvoiceAndQuotation.Caption = "Facturación el ebanista"
-    InvoiceAndQuotation.FrmClient.Caption = "Escoja el cliente para Facturación"
-    InvoiceAndQuotation.FrmCapture.Caption = "Escoja materiales para Facturación"
+    InvoiceAndQuotation.LblTittleCapture.Caption = "ESCOJA MATERIALES PARA FACTURACIÓN"
     InvoiceAndQuotation.Lbltitle_in.Caption = "FACTURA N°"
     InvoiceAndQuotation.Opdoc.Value = True
     InvoiceAndQuotation.OpNot.Value = True
     InvoiceAndQuotation.Show
-
+    InvoiceAndQuotation.GType_operation = "Factura"
+    InvoiceAndQuotation.BtnCreate.Caption = "FACTURAR"
 End Sub
 
 Private Sub quotation_Click()
@@ -227,12 +381,40 @@ Private Sub quotation_Click()
     InvoiceAndQuotation.Left = (MenuCarpenter.ScaleWidth - InvoiceAndQuotation.Width) / 2
     InvoiceAndQuotation.Top = (MenuCarpenter.ScaleHeight - InvoiceAndQuotation.Height) / 2
     InvoiceAndQuotation.Caption = "Cotización el ebanista"
-    InvoiceAndQuotation.FrmClient.Caption = "Escoja el cliente para Cotización"
-    InvoiceAndQuotation.FrmCapture.Caption = "Escoja materiales para Cotización"
+    InvoiceAndQuotation.LblTittleCapture.Caption = "ESCOJA MATERIALES PARA COTIZACIÓN"
     InvoiceAndQuotation.Lbltitle_in.Caption = "COTIZACIÓN N°"
     InvoiceAndQuotation.Opdoc.Value = True
     InvoiceAndQuotation.OpNot.Value = True
+    InvoiceAndQuotation.frmPagos.Visible = False
     InvoiceAndQuotation.Show
-
+    InvoiceAndQuotation.GType_operation = "Cotización"
+    InvoiceAndQuotation.BtnCreate.Caption = "COTIZAR"
+    
 End Sub
 
+'---------------------------------- modulo administracion de usuarios------------------------------------------------
+
+Private Sub CreateUsers_Click()
+
+    Load Admin_Users
+    Admin_Users.Left = (MenuCarpenter.ScaleWidth - Admin_Users.Width) / 2
+    Admin_Users.Top = (MenuCarpenter.ScaleHeight - Admin_Users.Height) / 2
+    Admin_Users.Caption = "Nuevo Usuario"
+    Admin_Users.FrmUser.Visible = False
+    Admin_Users.BtnCreate.Caption = "CREAR USUARIO"
+    Admin_Users.Show
+    
+End Sub
+
+Private Sub UpdateUsers_Click()
+    
+    Load Admin_Users
+    Admin_Users.Left = (MenuCarpenter.ScaleWidth - Admin_Users.Width) / 2
+    Admin_Users.Top = (MenuCarpenter.ScaleHeight - Admin_Users.Height) / 2
+    Admin_Users.Caption = "Modificar Usuario"
+    Admin_Users.OpName.Value = True
+    Admin_Users.FrmUser.Visible = True
+    Admin_Users.BtnCreate.Caption = "MODIFICAR USUARIO"
+    Admin_Users.Show
+    
+End Sub
