@@ -11,6 +11,171 @@ Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = True
 Attribute VB_PredeclaredId = False
 Attribute VB_Exposed = False
+' --------------------------------------------------------------------------------------------
+' \\ -- Colorear por filas
+' --------------------------------------------------------------------------------------------
+Function pvSetColors(objFlexgrid As Object, ByVal lColor1 As Long, ByVal lColor2 As Long)
+    Dim iRow            As Long
+    Dim iCol            As Integer
+    Dim lCurrentColor   As Long
+    
+     With objFlexgrid
+    ' -- Desahbilitar el repintado del control para agilizar el trabajo
+        .Redraw = False
+        .BackColor = lColor1
+        ' -- Recorrer las filas
+        For iRow = 1 To .Rows - 1 Step 2
+            ' -- Establecer la Fila actual del flex
+            .Row = iRow
+            ' -- Recorre por columna y le aplica el color a la celda indicada de la fila actual
+            For iCol = 0 To .Cols - 1
+                .Col = iCol
+                .CellBackColor = lColor2
+            Next
+        Next
+        ' -- Reestablecer la propiedad Redraw para poder refrescar el control
+        .Redraw = True
+    End With
+End Function
+
+' --------------------------------------------------------------------------------------------
+' \\ -- Colorear por columnas
+' --------------------------------------------------------------------------------------------
+Function ColorsColumns(objFlexgrid As Object, ByVal lColor1 As Long, ByVal lColor2 As Long)
+    Dim iRow            As Long
+    Dim iCol            As Integer
+    Dim lCurrentColor   As Long
+      
+    lCurrentColor = lColor1
+      
+    With objFlexgrid
+        ' -- Deshabilitar el Redraw
+        .Redraw = False
+        For iCol = 0 To .Cols - 1
+            .Col = iCol
+            If lCurrentColor = lColor1 Then
+               lCurrentColor = lColor2
+            Else
+               lCurrentColor = lColor1
+            End If
+            For iRow = 1 To .Rows - 1
+               .Row = iRow
+               .CellBackColor = lCurrentColor
+            Next
+        Next
+        ' -- Habilitar el Redraw
+        .Redraw = True
+    End With
+    
+    
+ End Function
+Function pvSetColorsColumns(objFlexgrid As Object, ByVal column As Long, ByVal lColor As Long)
+    Dim iRow            As Long
+    Dim iCol            As Integer
+    Dim lCurrentColor   As Long
+      
+    lCurrentColor = lColor1
+      
+    With objFlexgrid
+        ' -- Deshabilitar el Redraw
+        .Redraw = False
+        For iCol = 0 To .Cols - 1
+            .Col = iCol
+            
+            If iCol = column Then
+                For iRow = 1 To .Rows - 1
+                   .Row = iRow
+                   .CellBackColor = lColor
+                Next
+            End If
+           
+        Next
+        ' -- Habilitar el Redraw
+        .Redraw = True
+    End With
+End Function
+
+'colorear numeros negativos
+Function NumbersNegative(objFlexgrid As Object, ByVal column As Long, ByVal color As Long)
+    Dim iRow            As Long
+    Dim iCol            As Integer
+      
+    With objFlexgrid
+        For iCol = 0 To .Cols - 1
+            .Col = iCol
+            If iCol = column Then
+                For iRow = 1 To .Rows - 1
+                    .Row = iRow
+                    If .Text < 0 Then
+                        .CellForeColor = color
+                    End If
+                Next
+            End If
+        Next
+        .Col = 1
+        .Row = 1
+    End With
+End Function
+
+Function PaintText(objFlexgrid As Object, ByVal column As Long, ByVal color As Long, texto As String)
+    Dim iRow            As Long
+    Dim iCol            As Integer
+      
+    With objFlexgrid
+        For iCol = 0 To .Cols - 1
+            .Col = iCol
+            If iCol = column Then
+                For iRow = 1 To .Rows - 1
+                    .Row = iRow
+                    If .Text = texto Then
+                        .CellForeColor = color
+                        .CellAlignment = flexAlignCenterCenter
+                    End If
+                Next
+            End If
+        Next
+        .Col = 1
+        .Row = 1
+    End With
+End Function
+
+
+'sumar los valores de un grid
+Function Sum_Columns(objFlexgrid As Object, ByVal column As Long)
+    Dim iRow            As Long
+    Dim iCol            As Integer
+    Dim valor           As Long
+      
+    lCurrentColor = lColor1
+      
+    With objFlexgrid
+        ' -- Deshabilitar el Redraw
+        .Redraw = False
+        For iCol = 0 To .Cols - 1
+            .Col = iCol
+            
+            If iCol = column Then
+                For iRow = 1 To .Rows - 1
+                   .Row = iRow
+                   If .TextMatrix(iRow, column) = "" Then
+                        valor_dep = 0
+                   Else
+                        valor_dep = .TextMatrix(iRow, column)
+                   End If
+                   
+                   valor = valor + valor_dep
+                Next
+            End If
+           
+        Next
+        ' -- Habilitar el Redraw
+        .Redraw = True
+         
+    Sum_Columns = valor
+    End With
+End Function
+
+
 'funcion para comprobar el formato de email
 Function Validate_Emails(Validate_S_Email As String) As Integer
 
@@ -202,7 +367,10 @@ Function Recover_Id(op_Search As String, TABLA As String, DateSearch As String) 
         
         Case "User"
             Myrs.Open "select " & TABLA & ".id from " & TABLA & " where  (((" & TABLA & ".Nick)= '" & DateSearch & "')); ", MyCon, adOpenDynamic, adLockPessimistic
-            
+              
+        Case "project"
+            Myrs.Open "select " & TABLA & ".id from " & TABLA & " WHERE (((" & TABLA & ".Id_Operator)=" & DateSearch & ") AND ((" & TABLA & ".CampoType_Operator)='Factura')); ", MyCon, adOpenDynamic, adLockPessimistic
+              
         Case Else
     
     End Select

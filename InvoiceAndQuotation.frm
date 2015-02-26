@@ -192,7 +192,7 @@ Begin VB.Form InvoiceAndQuotation
             BackColor       =   4194304
             Appearance      =   1
             MonthBackColor  =   16777215
-            StartOfWeek     =   52756481
+            StartOfWeek     =   100466689
             TitleBackColor  =   4194304
             TitleForeColor  =   16777215
             TrailingForeColor=   4194304
@@ -1205,13 +1205,14 @@ Private Sub Form_Load()
     
     GridList_Input.Visible = False
     
-    GridList_Operative.Cols = GridList_Operative.Cols + 3
+    GridList_Operative.Cols = GridList_Operative.Cols + 4
     
     GridList_Operative.TextMatrix(0, 0) = "Descripción"
-    GridList_Operative.TextMatrix(0, 1) = "Valor Unidad"
-    GridList_Operative.TextMatrix(0, 2) = "Cantidad"
-    GridList_Operative.TextMatrix(0, 3) = "Valor Total"
-    GridList_Operative.TextMatrix(0, 4) = "Eliminar"
+    GridList_Operative.TextMatrix(0, 1) = "Medida"
+    GridList_Operative.TextMatrix(0, 2) = "Valor Unidad"
+    GridList_Operative.TextMatrix(0, 3) = "Cantidad"
+    GridList_Operative.TextMatrix(0, 4) = "Valor Total"
+    GridList_Operative.TextMatrix(0, 5) = "Eliminar"
     
 End Sub
 'FIN DE FORM operativo
@@ -1430,6 +1431,11 @@ Private Sub CbnMeasure_lostFocus()
         Next
     Next
     
+   Call C_Proc.pvSetColors(GridList_Input, RGB(233, 233, 233), RGB(209, 222, 253))
+     
+   Call C_Proc.pvSetColorsColumns(GridList_Input, 5, RGB(46, 46, 46))
+   Call C_Proc.PaintText(GridList_Input, 5, RGB(255, 255, 255), "INGRESAR")
+     
    Exit Sub
     
 ctrlerr:
@@ -1457,6 +1463,7 @@ Private Sub GridList_Input_Click()
     Dim Price As Long
     Dim Price_Total As String
     Dim Description As String
+    Dim Measure As String
     Dim Rows_Q As Integer
     Dim Q_Inputs As Long
     
@@ -1471,7 +1478,7 @@ Private Sub GridList_Input_Click()
          
          Description = GridList_Input.TextMatrix(id_GInput, 3)
          Price = GridList_Input.TextMatrix(id_GInput, 4)
-            
+         Measure = GridList_Input.TextMatrix(id_GInput, 2)
          Price_Total = Price * Q_Inputs
             
          Columnas = 2
@@ -1484,10 +1491,12 @@ Private Sub GridList_Input_Click()
          
         'cargamos el array
         GridList_Operative.TextMatrix(Count_GOperative, 0) = Description
-        GridList_Operative.TextMatrix(Count_GOperative, 1) = Price
-        GridList_Operative.TextMatrix(Count_GOperative, 2) = Q_Inputs
-        GridList_Operative.TextMatrix(Count_GOperative, 3) = Price_Total
-        GridList_Operative.TextMatrix(Count_GOperative, 4) = "Eliminar"
+        GridList_Operative.TextMatrix(Count_GOperative, 1) = Measure
+        GridList_Operative.TextMatrix(Count_GOperative, 2) = Price
+        GridList_Operative.TextMatrix(Count_GOperative, 3) = Q_Inputs
+        GridList_Operative.TextMatrix(Count_GOperative, 4) = Price_Total
+        GridList_Operative.TextMatrix(Count_GOperative, 5) = "ELIMINAR"
+        
         
         Count_GOperative = Count_GOperative + 1
         
@@ -1498,6 +1507,13 @@ Private Sub GridList_Input_Click()
              Next
          Next
              
+             
+        Dim C_Proc As New C_General_Procedures
+        Call C_Proc.pvSetColors(GridList_Operative, RGB(233, 233, 233), RGB(209, 222, 253))
+        
+        Call C_Proc.pvSetColorsColumns(GridList_Operative, 5, RGB(46, 46, 46))
+        Call C_Proc.PaintText(GridList_Operative, 5, RGB(255, 255, 255), "ELIMINAR")
+        
          FrmOperative.Visible = True
          BtnCreate.Visible = True
          Sum_Values (Price_Total)
@@ -1523,7 +1539,6 @@ Private Sub GridList_Operative_Click()
         Price_Rest = GridList_Operative.TextMatrix(id_GInput, 3)
         Price_Total = LblValue_Neto.Caption
         Total_Result = Price_Total - Price_Rest
-        MsgBox Total_Result
         
         GValueNeto = 0
         GValueDouble = 0
@@ -1562,6 +1577,9 @@ ctrlerr:
     End Select
      
 End Sub
+
+
+
 
 'OPCION PARA BUSCAR POR DOCUMENTO
 Private Sub Opdoc_Click()
@@ -1781,6 +1799,18 @@ End Function
 'SUMAR TODOS LOS VALORES
 Function Sum_Values(Value As Long)
    
+   Dim C_OVal As New C_OperativeVal
+   Dim listOpe() As Variant
+   
+   Dim OperateIva As String
+   Dim ValLabor As String
+   Dim ValWinner As String
+   
+   listOpe = C_OVal.SearchValuesOperatives
+   
+   OperateIva = listOpe(1, 0)
+   ValLabor = listOpe(2, 0)
+   ValWinner = listOpe(3, 0)
     'averiguamos si es el primer valor
     If LblValue_Neto.Caption = "" Then
         GValueNeto = 0
@@ -1799,12 +1829,12 @@ Function Sum_Values(Value As Long)
     LblValue_Neto.Caption = Format(LblValue_Neto.Caption, "####,####")
      
     'multiplicamos y asignamos el valor de la mano de obra
-    GValueDouble = GValueNeto * 2
+    GValueDouble = GValueNeto * ValLabor
     LdValue_Double.Caption = GValueDouble
     LdValue_Double.Caption = Format(LdValue_Double.Caption, "####,####")
      
     'multiplicamos y asignamos el valor de la mano de obra
-    GValueWinner = GValueNeto * 0.4
+    GValueWinner = GValueNeto * ValWinner
     LblValue_Winner.Caption = GValueWinner
     LblValue_Winner.Caption = Format(LblValue_Winner.Caption, "####,####")
     
@@ -1812,10 +1842,7 @@ Function Sum_Values(Value As Long)
     GValueSubTotal = GValueNeto + GValueDouble + GValueWinner
     LblValue_Subtotal.Caption = GValueSubTotal
     LblValue_Subtotal.Caption = Format(LblValue_Subtotal.Caption, "####,####")
-    Dim OperateIva As String
     
-    'traer valor de operacion iva
-    OperateIva = "16"
     
     'validamos si requiere iva
     If OpYes = True Then
@@ -1824,6 +1851,7 @@ Function Sum_Values(Value As Long)
         GValueTotal = GValueSubTotal + GValueIva
         LblValue_Iva.Caption = GValueIva
         LblValue_Iva.Caption = Format(LblValue_Iva.Caption, "####,####")
+        GValueTotal = Round(GValueTotal, 0)
         LblValue_Total.Caption = GValueTotal
         LblValue_Total.Caption = Format(LblValue_Total.Caption, "####,####")
        
@@ -1831,6 +1859,7 @@ Function Sum_Values(Value As Long)
         
         GValueTotal = GValueSubTotal
         LblValue_Iva.Caption = 0
+        GValueTotal = Round(GValueTotal, 0)
         LblValue_Total.Caption = GValueTotal
         LblValue_Total.Caption = Format(LblValue_Total.Caption, "####,####")
     
@@ -1862,9 +1891,17 @@ Function G_Factura()
     Dim op_Search As String
     Dim id As Integer
     Dim Id_User As Integer
-    Dim GUARDAR  As String
+    Dim Id_Project As Integer
+    Dim GUARDAR_P  As String
+    Dim GUARDAR_PD  As String
     Dim C_Proc As New C_General_Procedures
     Dim C_Project As New C_Project
+    Dim val_Iva As String
+    Dim Description As String
+    Dim Quantity As String
+    Dim Unit As String
+    Dim G_Total As String
+    Dim Measure As String
     
     'revisamos la opcion de busqueda
     If OpName.Value = True Then
@@ -1873,13 +1910,41 @@ Function G_Factura()
         op_Search = "Doc"
     End If
     
+    If LblValue_Iva.Caption = 0 Then
+        val_Iva = 0
+    Else
+        val_Iva = Format(LblValue_Iva.Caption, "##")
+    End If
+    
     'capturamos el cliente de la operacion
     id = C_Proc.Recover_Id(op_Search, "Client", CbnSearch.Text)
+    'capturamos el usuario de la operacion
     Id_User = C_Proc.Recover_Id("User", "Users", MenuCarpenter.Lbl_Value_User.Caption)
-    GUARDAR = C_Project.Add_Project(GType_operation, LblNumber.Caption, id, TxtDescripProject.Text, LblValue_Date.Caption, TxtDaysEnd.Text, Format(LblValue_Neto.Caption, "##"), Format(LdValue_Double.Caption, "##"), Format(LblValue_Winner.Caption, "##"), Format(LblValue_Subtotal.Caption, "##"), Format(LblValue_Iva.Caption, "##"), Format(LblValue_Total.Caption, "##"), TxtCast.Text, Format(LblValue_Sald.Caption, "##"), Id_User)
+    'guardamos la factura
+    GUARDAR_P = C_Project.Add_Project(GType_operation, LblNumber.Caption, id, TxtDescripProject.Text, LblValue_Date.Caption, TxtDaysEnd.Text, Format(LblValue_Neto.Caption, "##"), Format(LdValue_Double.Caption, "##"), Format(LblValue_Winner.Caption, "##"), Format(LblValue_Subtotal.Caption, "##"), val_Iva, Format(LblValue_Total.Caption, "##"), TxtCast.Text, Format(LblValue_Sald.Caption, "##"), Id_User)
+    'capturamos el numeo de proyecto recien creado de la operacion
+    Id_Project = C_Project.Recover_IDProject(GType_operation)
+    
+    Dim Q_GL_Operative As Integer
+    
+    Q_GL_Operative = GridList_Operative.Rows
+    Q_GL_Operative = Q_GL_Operative - 1
+    
+    For I = 1 To Q_GL_Operative
+    
+        Description = GridList_Operative.TextMatrix(I, 0)
+        Measure = GridList_Operative.TextMatrix(I, 1)
+        Unit = GridList_Operative.TextMatrix(I, 2)
+        Quantity = GridList_Operative.TextMatrix(I, 3)
+        G_Total = GridList_Operative.TextMatrix(I, 4)
+        
+        'guardamos los detalles de la factura
+        GUARDAR_PD = C_Project.Add_ProjectDetail(Id_Project, Measure, GType_operation, Description, Quantity, Unit, G_Total)
+    
+    Next
     
     'validamos el resultado de la operacion anterior
-    If GUARDAR = "OK" Then
+    If GUARDAR_P = "OK" And GUARDAR_PD = "OK" Then
     
         export_factura
         export_CCobro
@@ -2007,9 +2072,17 @@ Function G_Cotizacion()
     Dim op_Search As String
     Dim id As Integer
     Dim Id_User As Integer
-    Dim GUARDAR  As String
+    Dim Id_Project As Integer
+    Dim GUARDAR_P  As String
+    Dim GUARDAR_PD  As String
     Dim C_Proc As New C_General_Procedures
     Dim C_Project As New C_Project
+    Dim Description As String
+    Dim Quantity As String
+    Dim Unit As String
+    Dim G_Total As String
+    Dim val_Iva As String
+    Dim Measure As String
     
     'revisamos la opcion de busqueda
     If OpName.Value = True Then
@@ -2018,13 +2091,40 @@ Function G_Cotizacion()
         op_Search = "Doc"
     End If
     
+     If LblValue_Iva.Caption = 0 Then
+        val_Iva = 0
+    Else
+        val_Iva = Format(LblValue_Iva.Caption, "##")
+    End If
+    
     'capturamos el cliente de la operacion
     id = C_Proc.Recover_Id(op_Search, "Client", CbnSearch.Text)
     Id_User = C_Proc.Recover_Id("User", "Users", MenuCarpenter.Lbl_Value_User.Caption)
-    GUARDAR = C_Project.Add_Project(GType_operation, LblNumber.Caption, id, TxtDescripProject.Text, LblValue_Date.Caption, TxtDaysEnd.Text, Format(LblValue_Neto.Caption, "##"), Format(LdValue_Double.Caption, "##"), Format(LblValue_Winner.Caption, "##"), Format(LblValue_Subtotal.Caption, "##"), Format(LblValue_Iva.Caption, "##"), Format(LblValue_Total.Caption, "##"), 0, 0, Id_User)
+    GUARDAR_P = C_Project.Add_Project(GType_operation, LblNumber.Caption, id, TxtDescripProject.Text, LblValue_Date.Caption, TxtDaysEnd.Text, Format(LblValue_Neto.Caption, "##"), Format(LdValue_Double.Caption, "##"), Format(LblValue_Winner.Caption, "##"), Format(LblValue_Subtotal.Caption, "##"), val_Iva, Format(LblValue_Total.Caption, "##"), 0, 0, Id_User)
+    
+    'capturamos el numeo de proyecto recien creado de la operacion
+    Id_Project = C_Project.Recover_IDProject(GType_operation)
+    
+    Dim Q_GL_Operative As Integer
+    
+    Q_GL_Operative = GridList_Operative.Rows
+    Q_GL_Operative = Q_GL_Operative - 1
+    
+    For I = 1 To Q_GL_Operative
+    
+        Description = GridList_Operative.TextMatrix(I, 0)
+        Measure = GridList_Operative.TextMatrix(I, 1)
+        Unit = GridList_Operative.TextMatrix(I, 2)
+        Quantity = GridList_Operative.TextMatrix(I, 3)
+        G_Total = GridList_Operative.TextMatrix(I, 4)
+        
+        'guardamos los detalles de la factura
+        GUARDAR_PD = C_Project.Add_ProjectDetail(Id_Project, Measure, GType_operation, Description, Quantity, Unit, G_Total)
+    
+    Next
     
     'validamos el resultado de la operacion anterior
-    If GUARDAR = "OK" Then
+    If GUARDAR_P = "OK" And GUARDAR_PD = "OK" Then
     
         LblhelpGeneral.Visible = True
         LblhelpGeneral.Caption = GType_operation & " realizada con exito!"

@@ -718,6 +718,10 @@ Function InsertGrid()
     GridList.ColAlignment(2) = 1
     GridList.ColAlignment(4) = 4
     'llamamos funcion limpiar
+    
+    Dim C_Proc As New C_General_Procedures
+    Call C_Proc.pvSetColors(GridList, RGB(233, 233, 233), RGB(209, 222, 253))
+    
     clear
     
 End Function

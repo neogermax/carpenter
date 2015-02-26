@@ -179,11 +179,17 @@ Begin VB.MDIForm MenuCarpenter
    End
    Begin VB.Menu Module_sale 
       Caption         =   "&Modulo de Venta"
+      Begin VB.Menu quotation 
+         Caption         =   "&Cotización"
+      End
+      Begin VB.Menu SaleEasy 
+         Caption         =   "&Venta Minima"
+      End
       Begin VB.Menu invoice 
          Caption         =   "&Facturación"
       End
-      Begin VB.Menu quotation 
-         Caption         =   "&Cotización"
+      Begin VB.Menu EndProyect 
+         Caption         =   "&Pagos ó Abonos"
       End
    End
    Begin VB.Menu AdminUsers 
@@ -391,6 +397,32 @@ Private Sub quotation_Click()
     InvoiceAndQuotation.BtnCreate.Caption = "COTIZAR"
     
 End Sub
+
+Private Sub SaleEasy_Click()
+
+    Load Sale_Easy
+    Sale_Easy.Left = (MenuCarpenter.ScaleWidth - Sale_Easy.Width) / 2
+    Sale_Easy.Top = (MenuCarpenter.ScaleHeight - Sale_Easy.Height) / 2
+    Sale_Easy.Caption = "Venta y chicharrones el ebanista"
+    Sale_Easy.Lbltitle_in.Caption = "VENTA N°"
+    Sale_Easy.Opdoc.Value = True
+    Sale_Easy.Show
+    Sale_Easy.GType_operation = "Venta"
+    Sale_Easy.BtnCreate.Caption = "VENTA"
+
+End Sub
+
+Private Sub EndProyect_Click()
+    
+    Load PaymentsCredits
+    PaymentsCredits.Left = (MenuCarpenter.ScaleWidth - PaymentsCredits.Width) / 2
+    PaymentsCredits.Top = (MenuCarpenter.ScaleHeight - PaymentsCredits.Height) / 2
+    PaymentsCredits.Caption = "Pagos y abonos el ebanista"
+    PaymentsCredits.Show
+   
+End Sub
+
+
 
 '---------------------------------- modulo administracion de usuarios------------------------------------------------
 

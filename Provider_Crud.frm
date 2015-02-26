@@ -1017,6 +1017,9 @@ Function InsertGrid()
     'llamamos funcion limpiar
     clear
     
+    Dim C_Proc As New C_General_Procedures
+    Call C_Proc.pvSetColors(GridList, RGB(233, 233, 233), RGB(209, 222, 253))
+    
 End Function
 ''''''----------- REGION FUNCIONES
 

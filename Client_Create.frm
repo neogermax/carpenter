@@ -987,7 +987,7 @@ End Function
 Function InsertGrid()
 
     Dim Pos_Grid As Integer
-    
+     
     Client_Crud.Height = 7875
     
     'habilitamos el grid
@@ -1016,6 +1016,9 @@ Function InsertGrid()
     'alineamos columnas disparejas
     GridList.ColAlignment(1) = 4
     GridList.ColAlignment(2) = 4
+    
+    Dim C_Proc As New C_General_Procedures
+    Call C_Proc.pvSetColors(GridList, RGB(233, 233, 233), RGB(209, 222, 253))
     
     'llamamos funcion limpiar
     clear

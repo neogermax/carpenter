@@ -1,5 +1,5 @@
 Client_Crud = 200, 200, 1054, 650, , 25, 25, 879, 475, C
-C_General_Procedures = 0, 0, 854, 450, 
+C_General_Procedures = 0, 0, 854, 450, Z
 C_CRUD_client = 125, 125, 979, 575, 
 MenuCarpenter = 125, 125, 979, 575, , 100, 100, 954, 556, C
 C_Connections = 240, 36, 1091, 486, 
@@ -9,7 +9,9 @@ List_Price = 175, 175, 1026, 625, , 150, 150, 1001, 600, C
 C_List_Price = 200, 200, 1051, 650, 
 List_PriceEdit = 200, 200, 1070, 666, , 100, 100, 970, 566, C
 InvoiceAndQuotation = -1, -1, 1107, 465, , 105, 77, 975, 543, C
-C_Project = 100, 100, 970, 566, 
+C_Project = 205, 55, 1075, 521, 
 frmLogin = 200, 200, 1070, 666, , 175, 175, 1045, 641, C
 C_Users = 225, 225, 1095, 691, 
 Admin_Users = 0, 0, 870, 466, , 200, 200, 1070, 666, C
+Sale_Easy = 50, 50, 942, 501, , 0, 0, 892, 451, C
+PaymentsCredits = 100, 100, 992, 551, , 75, 75, 967, 526, C

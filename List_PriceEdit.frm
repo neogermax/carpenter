@@ -603,7 +603,9 @@ Private Sub CbnMeasure_lostFocus()
         Next
     Next
     
-     Exit Sub
+    Call C_Proc.pvSetColors(GridList, RGB(233, 233, 233), RGB(209, 222, 253))
+    
+   Exit Sub
     
 ctrlerr:
     

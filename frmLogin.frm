@@ -162,16 +162,29 @@ Private Sub cmdOK_Click()
     Else
         Users = C_User.User_Compary(txtUserName.Text)
         'comprobar si la contraseña es correcta
-        If TxtPassword = Users(1, 0) Then
+        If txtPassword = Users(1, 0) Then
             Load MenuCarpenter
             MenuCarpenter.Show
             MenuCarpenter.Lbl_Value_User.Caption = Users(0, 0)
             MenuCarpenter.Lbl_Value_Roll.Caption = Users(2, 0)
+            
+            Select Case Users(2, 0)
+            
+                Case "ADM"
+                    Desabilita_Admin
+                Case "OPE"
+                    Desabilita_Oper
+                Case "CON"
+                    Desabilita_Consul
+                    
+            End Select
+            
+            
             LoginSucceeded = True
             Me.Hide
         Else
             MsgBox "La contraseña no es válida. Vuelva a intentarlo", , "Inicio de sesión"
-            TxtPassword.SetFocus
+            txtPassword.SetFocus
             
         End If
     End If
@@ -191,10 +204,36 @@ Function ValidateCampos() As Integer
     If txtUserName.Text = "Seleccione..." Then
         valuecampos = 1
     End If
-    If TxtPassword.Text = "" Then
+    If txtPassword.Text = "" Then
          valuecampos = 1
     End If
  
     ValidateCampos = valuecampos
 
 End Function
+
+Function Desabilita_Admin()
+  
+    MenuCarpenter.AdminUsers.Visible = False
+    
+End Function
+
+Function Desabilita_Oper()
+    
+    MenuCarpenter.Client.Visible = False
+    MenuCarpenter.provider.Visible = False
+    MenuCarpenter.ListPrices.Visible = False
+    MenuCarpenter.AdminUsers.Visible = False
+
+End Function
+
+Function Desabilita_Consul()
+    
+    MenuCarpenter.Client.Visible = False
+    MenuCarpenter.provider.Visible = False
+    MenuCarpenter.ListPrices.Visible = False
+    MenuCarpenter.AdminUsers.Visible = False
+    
+End Function
+
+
