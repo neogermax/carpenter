@@ -227,6 +227,86 @@ ctrlerr:
 
 End Function
 
+'funcion que trae los proyectos pendientes por pago
+Function ChargeClient()
 
+   Dim StringBD As String
+   Dim C_conect As New C_Connections
+      
+   StringBD = C_conect.StringConnect_Access
+     
+   Dim MYRECORDSET As ADODB.Recordset
+   Dim MYSQL As String
+   Dim I%
+   Dim Datos() As Variant
+    
+   Set MYRECORDSET = New ADODB.Recordset
+         
+        MYSQL = " SELECT Client.Name, TC_Document.Description, Client.Documents, Client.StreetAddress, Client.Phone, Client.Email, Client.Observations, Client.CreateDate " & _
+                " FROM TC_Document INNER JOIN Client ON TC_Document.Id = Client.IdDocument " & _
+                " ORDER BY Client.Name; "
+   
+            
+     On Error GoTo ctrlerr
+    MYRECORDSET.Open MYSQL, StringBD
+    I = MYRECORDSET.RecordCount
+    Datos = MYRECORDSET.GetRows
+    ChargeClient = Datos
+    
+    Exit Function
+    
+ctrlerr:
+    
+    Select Case Err.Number
+    
+    Case 3021
+    MsgBox "El insumo NO existe!!!", vbExclamation + vbOKOnly, "Información!"
+  
+    
+    Case Else
+    MsgBox "Ha ocurrido un error inesperado!" & Chr(13) & "Error " & Err.Number & ": " & Err.Description
+    End Select
+    
+End Function
+
+'funcion que  nos trae la cantidad de facturas pendientes
+Function Q_ChargeClient()
+
+    Dim MyCon As New ADODB.Connection
+    Dim Myrs As New ADODB.Recordset
+    Dim StringBD As String
+    Dim TOTAL As Integer
+    Dim C_conect As New C_Connections
+   
+    TOTAL = 0
+    StringBD = C_conect.StringConnect_Access_consult
+   
+    On Error GoTo ctrlerr
+    MyCon.Open StringBD
+    Myrs.Open " SELECT count(Client.id) " & _
+              " FROM TC_Document INNER JOIN Client ON TC_Document.Id = Client.IdDocument;", MyCon, adOpenDynamic, adLockPessimistic
+    
+    TOTAL = Myrs.Fields(0)
+    
+    Myrs.Close
+    MyCon.Close
+
+    Q_ChargeClient = TOTAL
+    
+    Exit Function
+    
+ctrlerr:
+    
+    Select Case Err.Number
+    
+    Case 3021
+    MsgBox "La Base de Datos notiene clientes en este momento!!!", vbExclamation + vbOKOnly, "Información!"
+    
+    Case Else
+    MsgBox "Ha ocurrido un error inesperado!" & Chr(13) & "Error " & Err.Number & ": " & Err.Description
+    End Select
+
+
+End Function
 
 

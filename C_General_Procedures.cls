@@ -467,6 +467,14 @@ Function Validate_Numeric(text_value As String)
 
 End Function
 
+
+Function AddMiles(objText As Object)
+    Dim posSel As Long
+    posSel = objText.SelStart
+    objText.Text = Format(objText.Text, "###,###")
+    objText.SelStart = posSel + 1
+End Function
+
 Function Config()
     
    Dim StringBD As String

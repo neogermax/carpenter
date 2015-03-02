@@ -1,5 +1,5 @@
 Client_Crud = 200, 200, 1054, 650, , 25, 25, 879, 475, C
-C_General_Procedures = 0, 0, 854, 450, Z
+C_General_Procedures = 0, 0, 854, 450, 
 C_CRUD_client = 125, 125, 979, 575, 
 MenuCarpenter = 125, 125, 979, 575, , 100, 100, 954, 556, C
 C_Connections = 240, 36, 1091, 486, 
@@ -15,3 +15,8 @@ C_Users = 225, 225, 1095, 691,
 Admin_Users = 0, 0, 870, 466, , 200, 200, 1070, 666, C
 Sale_Easy = 50, 50, 942, 501, , 0, 0, 892, 451, C
 PaymentsCredits = 100, 100, 992, 551, , 75, 75, 967, 526, C
+C_OperativeVal = 25, 25, 917, 476, Z
+Admin_ValuesFact = 200, 200, 1092, 651, , 150, 150, 1042, 601, C
+ViewClient = 0, 0, 892, 451, , 200, 200, 1092, 651, C
+C_ValidateQuote = 0, 0, 892, 451, 
+Admin_ValuesDiscounts = 125, 125, 1017, 576, , 75, 75, 967, 526, C

@@ -124,6 +124,7 @@ Public LoginSucceeded As Boolean
 Private Sub Form_Load()
     
     Dim C_Proc As New C_General_Procedures
+    Dim C_Quote As New C_ValidateQuote
     Dim Users() As Variant
     
     
@@ -138,6 +139,8 @@ Private Sub Form_Load()
     For I = 0 To Q_User
            txtUserName.AddItem Users(1, I)
     Next
+    
+    Call C_Quote.UpdateStateQuote
     
 End Sub
 
@@ -162,7 +165,7 @@ Private Sub cmdOK_Click()
     Else
         Users = C_User.User_Compary(txtUserName.Text)
         'comprobar si la contraseña es correcta
-        If txtPassword = Users(1, 0) Then
+        If TxtPassword = Users(1, 0) Then
             Load MenuCarpenter
             MenuCarpenter.Show
             MenuCarpenter.Lbl_Value_User.Caption = Users(0, 0)
@@ -184,7 +187,7 @@ Private Sub cmdOK_Click()
             Me.Hide
         Else
             MsgBox "La contraseña no es válida. Vuelva a intentarlo", , "Inicio de sesión"
-            txtPassword.SetFocus
+            TxtPassword.SetFocus
             
         End If
     End If
@@ -204,7 +207,7 @@ Function ValidateCampos() As Integer
     If txtUserName.Text = "Seleccione..." Then
         valuecampos = 1
     End If
-    If txtPassword.Text = "" Then
+    If TxtPassword.Text = "" Then
          valuecampos = 1
     End If
  
@@ -214,7 +217,8 @@ End Function
 
 Function Desabilita_Admin()
   
-    MenuCarpenter.AdminUsers.Visible = False
+    MenuCarpenter.AdminUsers = False
+    MenuCarpenter.OperationalProcesses = False
     
 End Function
 
@@ -224,7 +228,8 @@ Function Desabilita_Oper()
     MenuCarpenter.provider.Visible = False
     MenuCarpenter.ListPrices.Visible = False
     MenuCarpenter.AdminUsers.Visible = False
-
+    MenuCarpenter.OperationalProcesses.Visible = False
+    
 End Function
 
 Function Desabilita_Consul()
@@ -233,6 +238,7 @@ Function Desabilita_Consul()
     MenuCarpenter.provider.Visible = False
     MenuCarpenter.ListPrices.Visible = False
     MenuCarpenter.AdminUsers.Visible = False
+    MenuCarpenter.OperationalProcesses.Visible = False
     
 End Function
 

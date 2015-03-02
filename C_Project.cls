@@ -17,7 +17,6 @@ Attribute VB_Exposed = False
 
 'actualizar proyecto en la BD
 Function Update_Project(id As Integer)
-
    
     On Error GoTo ctrlerr
     
@@ -236,6 +235,115 @@ End Function
 '---------------------------------------------------------------------------------------------------------------------------------------
 '---------------------------------------------------------------------- proyecto -------------------------------------------------------
 '---------------------------------------------------------------------------------------------------------------------------------------
+'funcion que  nos trae la cantidad de proyecto por cliente
+Function Q_SearchProjectClient(Id_Client As String, TypeOperative As String)
+
+    Dim MyCon As New ADODB.Connection
+    Dim Myrs As New ADODB.Recordset
+    Dim StringBD As String
+    Dim TOTAL As Integer
+    Dim C_conect As New C_Connections
+   
+     
+    TOTAL = 0
+    StringBD = C_conect.StringConnect_Access_consult
+   
+    On Error GoTo ctrlerr
+    MyCon.Open StringBD
+    
+    If TypeOperative = "All" Then
+        
+         Myrs.Open " SELECT count(Project.Id) " & _
+                   " FROM Project " & _
+                   " WHERE (((Project.Id_Client)=" & Id_Client & "));  ", MyCon, adOpenDynamic, adLockPessimistic
+    
+    Else
+            
+         Myrs.Open " SELECT count(Project.Id) " & _
+                   " FROM Project " & _
+                   " WHERE (((Project.Id_Client)=" & Id_Client & ")AND ((Project.CampoType_Operator)='" & TypeOperative & "'));  ", MyCon, adOpenDynamic, adLockPessimistic
+        
+    End If
+        
+    TOTAL = Myrs.Fields(0)
+    
+    Myrs.Close
+    MyCon.Close
+
+    Q_SearchProjectClient = TOTAL
+    
+    Exit Function
+    
+ctrlerr:
+    
+    Select Case Err.Number
+    
+    Case 3021
+    MsgBox "El recibo ingresado NO existe!!!", vbExclamation + vbOKOnly, "Información!"
+    
+    Case Else
+    MsgBox "Ha ocurrido un error inesperado!" & Chr(13) & "Error " & Err.Number & ": " & Err.Description
+    End Select
+
+
+End Function
+
+'captura de proyectos por cliente
+Function SearchProjectClient(Id_Client As String, TypeOperative As String)
+
+   Dim StringBD As String
+   Dim C_conect As New C_Connections
+      
+   StringBD = C_conect.StringConnect_Access
+     
+   Dim MYRECORDSET As ADODB.Recordset
+   Dim MYSQL As String
+   Dim I%
+   Dim Datos() As Variant
+    
+   Set MYRECORDSET = New ADODB.Recordset
+         
+        If TypeOperative = "All" Then
+        
+             MYSQL = " SELECT Project.Description, Project.CreateDate, Project.VR_Total, Project.State_Project " & _
+                     " FROM Project " & _
+                     " WHERE (((Project.Id_Client)=" & Id_Client & "));  "
+        
+        Else
+            
+             MYSQL = " SELECT Project.Description, Project.CreateDate, Project.VR_Total, Project.State_Project " & _
+                     " FROM Project " & _
+                     " WHERE (((Project.Id_Client)=" & Id_Client & ")AND ((Project.CampoType_Operator)='" & TypeOperative & "'));  "
+        
+        End If
+         
+         
+       
+   
+            
+     On Error GoTo ctrlerr
+    MYRECORDSET.Open MYSQL, StringBD
+    I = MYRECORDSET.RecordCount
+    Datos = MYRECORDSET.GetRows
+    SearchProjectClient = Datos
+    
+    Exit Function
+    
+ctrlerr:
+    
+    Select Case Err.Number
+    
+    Case 3021
+    MsgBox "El insumo NO existe!!!", vbExclamation + vbOKOnly, "Información!"
+  
+    
+    Case Else
+    MsgBox "Ha ocurrido un error inesperado!" & Chr(13) & "Error " & Err.Number & ": " & Err.Description
+    End Select
+
+End Function
+
+
 'captura detalle del proyecto
 Function DateProjectDetail(Id_Number As String)
 
@@ -461,7 +569,7 @@ Function Add_Project(CampoType_Operator As String, Id_Operator As String, Id_Cli
         Case "Factura"
             State = "inicial"
         Case "Cotización"
-            State = "N/A"
+            State = "valida"
         Case "Venta"
             State = "Cancelado"
         Case Else

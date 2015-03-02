@@ -494,7 +494,7 @@ Public G_IdDocument As String
 ''''''----------- REGION ENVENTOS
 'INICIO DE FORM CLIENTE
 Private Sub Form_Load()
-
+    
     Dim C_Proc As New C_General_Procedures
    
     Dim Type_doc() As Variant
@@ -559,17 +559,17 @@ Private Sub BtnCreate_Click()
         If Proccess = "CREAR CLIENTE" Then
         
             'traemos la cantidad de clientes en BD
-            Q_Client = C_Proc.Q_Combo("Client")
-            Q_Client = Q_Client - 1
+            Q_CLIENT = C_Proc.Q_Combo("Client")
+            Q_CLIENT = Q_CLIENT - 1
                    
             'validamos si la tabla esta vacia o no
-            If Q_Client <> -1 Then
+            If Q_CLIENT <> -1 Then
                 
                 'cargamos consulta datos clientes en BD
                 Client = C_Proc.Datos_Charge("Client", "Add_Doc")
                 
                 'recorremos el arreglo para verifica si esta repetido
-                For I = 0 To Q_Client
+                For I = 0 To Q_CLIENT
                     'validamos el campo de cliente o documento
                     If Client(1, I) = TxtDocument.Text Then
                         MsgBox "el Cliente  " & TxtName.Text & "   ya existe en la base de datos!!!", vbInformation + vbOKOnly, "Información!"
@@ -1025,4 +1025,5 @@ Function InsertGrid()
     
 End Function
 ''''''----------- REGION FUNCIONES
+ 
 

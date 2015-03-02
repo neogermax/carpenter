@@ -201,6 +201,21 @@ Begin VB.MDIForm MenuCarpenter
          Caption         =   "&Modificar"
       End
    End
+   Begin VB.Menu Querys 
+      Caption         =   "&Consultas"
+      Begin VB.Menu ViewClients 
+         Caption         =   "&Ver Clientes"
+      End
+   End
+   Begin VB.Menu OperationalProcesses 
+      Caption         =   "&Procesos Operacionales"
+      Begin VB.Menu TurnoverSecuritiesAdministrators 
+         Caption         =   "&Administración de Valores Facturación"
+      End
+      Begin VB.Menu AdminDiscount 
+         Caption         =   "&Administración de Descuentos en Facturación"
+      End
+   End
 End
 Attribute VB_Name = "MenuCarpenter"
 Attribute VB_GlobalNameSpace = False
@@ -208,6 +223,7 @@ Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 Private Const IMAGESIZE = 0.566893424036281 'BY MAXeXTREME
+
 
 Private Sub MDIForm_Load()
 
@@ -253,6 +269,8 @@ Private Sub MDIForm_Resize()
     PicStretch.Visible = False
 
 End Sub
+
+
 
 'hora en linea
 Private Sub Tm_In_Timer()
@@ -422,8 +440,6 @@ Private Sub EndProyect_Click()
    
 End Sub
 
-
-
 '---------------------------------- modulo administracion de usuarios------------------------------------------------
 
 Private Sub CreateUsers_Click()
@@ -449,4 +465,41 @@ Private Sub UpdateUsers_Click()
     Admin_Users.BtnCreate.Caption = "MODIFICAR USUARIO"
     Admin_Users.Show
     
+End Sub
+
+'---------------------------------- modulo administracion operaciones------------------------------------------------
+
+Private Sub TurnoverSecuritiesAdministrators_Click()
+ 
+    Load Admin_ValuesFact
+    Admin_ValuesFact.Left = (MenuCarpenter.ScaleWidth - Admin_ValuesFact.Width) / 2
+    Admin_ValuesFact.Top = (MenuCarpenter.ScaleHeight - Admin_ValuesFact.Height) / 2
+    Admin_ValuesFact.Caption = "Administrador de valores operativos en facturación"
+    Admin_ValuesFact.BtnCreate.Caption = "ACTUALIZAR"
+    Admin_ValuesFact.Show
+
+End Sub
+Private Sub AdminDiscount_Click()
+
+    Load Admin_ValuesDiscounts
+    Admin_ValuesDiscounts.Left = (MenuCarpenter.ScaleWidth - Admin_ValuesDiscounts.Width) / 2
+    Admin_ValuesDiscounts.Top = (MenuCarpenter.ScaleHeight - Admin_ValuesDiscounts.Height) / 2
+    Admin_ValuesDiscounts.Caption = "Administrador de descuentos en facturación"
+    Admin_ValuesDiscounts.BtnCreate.Caption = "ACTUALIZAR"
+    Admin_ValuesDiscounts.Show
+
+End Sub
+
+
+
+'---------------------------------- modulo consultas------------------------------------------------
+
+Private Sub ViewClients_Click()
+
+    Load ViewClient
+    ViewClient.Left = (MenuCarpenter.ScaleWidth - ViewClient.Width) / 2
+    ViewClient.Top = (MenuCarpenter.ScaleHeight - ViewClient.Height) / 2
+    ViewClient.Caption = "Nuestro Clientes"
+    ViewClient.Show
+
 End Sub

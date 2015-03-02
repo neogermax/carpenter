@@ -702,19 +702,21 @@ Private Sub GridList_Project_Click()
     Dim ListProject() As Variant
     Dim ListProjectDetails() As Variant
     
-    Dim id_GInput As String
+    Dim Id_GInput As String
     Dim IdProject As Integer
+    Dim NumberFact As String
     
     Dim C_Proc As New C_General_Procedures
     
      
-    id_GInput = GridList_Project.Row
+    Id_GInput = GridList_Project.Row
     FrmDescription.Visible = True
       
-    LblClient.Caption = "CLIENTE: " & GridList_Project.TextMatrix(id_GInput, 1)
-    LblNumberFact.Caption = GridList_Project.TextMatrix(id_GInput, 0)
+    LblClient.Caption = "CLIENTE: " & GridList_Project.TextMatrix(Id_GInput, 1)
+    LblNumberFact.Caption = GridList_Project.TextMatrix(Id_GInput, 0)
+    NumberFact = GridList_Project.TextMatrix(Id_GInput, 0)
       
-    ListProject = C_Project.DateProjectDetail(id_GInput)
+    ListProject = C_Project.DateProjectDetail(Id_GInput)
     
     TxtDescripProject.Text = ListProject(0, 0)
     TxtDescripProject.Enabled = False
@@ -722,7 +724,7 @@ Private Sub GridList_Project_Click()
     LblValueSale.Caption = Format(ListProject(2, 0), "####,####")
     
     'capturamos el id del proyecto de la operacion
-    IdProject = C_Proc.Recover_Id("project", "project", id_GInput)
+    IdProject = C_Proc.Recover_Id("project", "project", NumberFact)
     'capturamos el detalle del proyecto
     ListProjectDetails = C_Project.SearchDetailsProject(IdProject)
     
@@ -793,14 +795,14 @@ End Sub
     
 Private Sub GridList_Detail_Click()
  
-    Dim id_GInput As String
+    Dim Id_GInput As String
     
-    id_GInput = GridList_Detail.Row
-    G_PosDetail = id_GInput
-    LblMaterialsVal.Caption = GridList_Detail.TextMatrix(id_GInput, 0)
-    LblFactVal.Caption = Format(GridList_Detail.TextMatrix(id_GInput, 4), "####,####")
-    TxtFactPro.Text = GridList_Detail.TextMatrix(id_GInput, 6)
-    TxtReal.Text = GridList_Detail.TextMatrix(id_GInput, 7)
+    Id_GInput = GridList_Detail.Row
+    G_PosDetail = Id_GInput
+    LblMaterialsVal.Caption = GridList_Detail.TextMatrix(Id_GInput, 0)
+    LblFactVal.Caption = Format(GridList_Detail.TextMatrix(Id_GInput, 4), "####,####")
+    TxtFactPro.Text = GridList_Detail.TextMatrix(Id_GInput, 6)
+    TxtReal.Text = GridList_Detail.TextMatrix(Id_GInput, 7)
 
 End Sub
 

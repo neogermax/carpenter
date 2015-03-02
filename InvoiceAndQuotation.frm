@@ -16,6 +16,10 @@ Begin VB.Form InvoiceAndQuotation
    Picture         =   "InvoiceAndQuotation.frx":0000
    ScaleHeight     =   10050
    ScaleWidth      =   15210
+   Begin VB.Timer TimerEnd 
+      Left            =   12000
+      Top             =   9480
+   End
    Begin VB.PictureBox FrmOperative 
       BorderStyle     =   0  'None
       Height          =   3495
@@ -192,7 +196,7 @@ Begin VB.Form InvoiceAndQuotation
             BackColor       =   4194304
             Appearance      =   1
             MonthBackColor  =   16777215
-            StartOfWeek     =   100466689
+            StartOfWeek     =   101711873
             TitleBackColor  =   4194304
             TitleForeColor  =   16777215
             TrailingForeColor=   4194304
@@ -1155,6 +1159,7 @@ Public GVAbono As Long
 Public GSwitch_Delete As Integer
 Public GType_operation As String
 Public GName As String
+Public tiempo As Long
 '''''' END_REGION GLOBALES
 
 ''''''----------- REGION ENVENTOS
@@ -1286,13 +1291,13 @@ Private Sub BtnSearch_Click()
         block
         
         'capturamos si hay factura o no
-        Q_Fact = C_Project.Q_Project(GType_operation)
+        Q_fact = C_Project.Q_Project(GType_operation)
         
-        If Q_Fact = 0 Then
+        If Q_fact = 0 Then
          LblNumber.Caption = 1
         Else
-          Q_Fact = Q_Fact + 1
-          LblNumber.Caption = Q_Fact
+          Q_fact = Q_fact + 1
+          LblNumber.Caption = Q_fact
         End If
         
     End If
@@ -1458,7 +1463,7 @@ End Sub
 Private Sub GridList_Input_Click()
     
     Dim PosGrid() As Variant
-    Dim id_GInput As String
+    Dim Id_GInput As String
     
     Dim Price As Long
     Dim Price_Total As String
@@ -1474,11 +1479,11 @@ Private Sub GridList_Input_Click()
         
     Else
          Q_Inputs = TxtQuanty.Text
-         id_GInput = GridList_Input.Row
+         Id_GInput = GridList_Input.Row
          
-         Description = GridList_Input.TextMatrix(id_GInput, 3)
-         Price = GridList_Input.TextMatrix(id_GInput, 4)
-         Measure = GridList_Input.TextMatrix(id_GInput, 2)
+         Description = GridList_Input.TextMatrix(Id_GInput, 3)
+         Price = GridList_Input.TextMatrix(Id_GInput, 4)
+         Measure = GridList_Input.TextMatrix(Id_GInput, 2)
          Price_Total = Price * Q_Inputs
             
          Columnas = 2
@@ -1525,7 +1530,7 @@ End Sub
 'operaciones de eliminacion de datos del grid de seleccion de insumos
 Private Sub GridList_Operative_Click()
 
-    Dim id_GInput As String
+    Dim Id_GInput As String
     Dim Price_Total As Long
     Dim Price_Rest As Long
     Dim Total_Result As Long
@@ -1535,8 +1540,8 @@ Private Sub GridList_Operative_Click()
     If MsgBox("Esta seguro de eliminar el insumo??", vbYesNo, "Confirmacion") = vbYes Then
         
         'Acciones a realizar
-        id_GInput = GridList_Operative.Row
-        Price_Rest = GridList_Operative.TextMatrix(id_GInput, 3)
+        Id_GInput = GridList_Operative.Row
+        Price_Rest = GridList_Operative.TextMatrix(Id_GInput, 3)
         Price_Total = LblValue_Neto.Caption
         Total_Result = Price_Total - Price_Rest
         
@@ -1552,11 +1557,11 @@ Private Sub GridList_Operative_Click()
                
         Sum_Values (Total_Result)
         
-        GridList_Operative.TextMatrix(id_GInput, 0) = ""
-        GridList_Operative.TextMatrix(id_GInput, 1) = ""
-        GridList_Operative.TextMatrix(id_GInput, 2) = ""
-        GridList_Operative.TextMatrix(id_GInput, 3) = ""
-        GridList_Operative.TextMatrix(id_GInput, 4) = ""
+        GridList_Operative.TextMatrix(Id_GInput, 0) = ""
+        GridList_Operative.TextMatrix(Id_GInput, 1) = ""
+        GridList_Operative.TextMatrix(Id_GInput, 2) = ""
+        GridList_Operative.TextMatrix(Id_GInput, 3) = ""
+        GridList_Operative.TextMatrix(Id_GInput, 4) = ""
         
     End If
     
@@ -1632,6 +1637,15 @@ Private Sub OpName_Click()
     Next
 
 End Sub
+
+Private Sub TimerEnd_Timer()
+    tiempo = tiempo + 1
+    If tiempo = 2 Then
+      MsgBox "Por su seguridad cerramos la ventana actual"
+      Unload InvoiceAndQuotation
+    End If
+End Sub
+
 'VALIDAR CAMPO NUMERICO y consultar el nuevo saldo
 Private Sub TxtCast_Change()
 
@@ -1642,6 +1656,8 @@ Private Sub TxtCast_Change()
     Dim ResultSald As Long
     Dim Operator As Long
     
+    Call C_Proc.AddMiles(TxtCast)
+
     initial = TxtCast.Text
     final = C_Proc.Validate_Numeric(initial)
     TxtCast.Text = final
@@ -1649,7 +1665,7 @@ Private Sub TxtCast_Change()
     If TxtCast.Text = "" Then
         Operator = 0
     Else
-        Operator = TxtCast.Text
+        Operator = Format(TxtCast.Text, "##")
     End If
     
     ResultSald = Rest_Sald(Format(LblValue_Total.Caption, "##"), Operator)
@@ -1921,7 +1937,7 @@ Function G_Factura()
     'capturamos el usuario de la operacion
     Id_User = C_Proc.Recover_Id("User", "Users", MenuCarpenter.Lbl_Value_User.Caption)
     'guardamos la factura
-    GUARDAR_P = C_Project.Add_Project(GType_operation, LblNumber.Caption, id, TxtDescripProject.Text, LblValue_Date.Caption, TxtDaysEnd.Text, Format(LblValue_Neto.Caption, "##"), Format(LdValue_Double.Caption, "##"), Format(LblValue_Winner.Caption, "##"), Format(LblValue_Subtotal.Caption, "##"), val_Iva, Format(LblValue_Total.Caption, "##"), TxtCast.Text, Format(LblValue_Sald.Caption, "##"), Id_User)
+    GUARDAR_P = C_Project.Add_Project(GType_operation, LblNumber.Caption, id, TxtDescripProject.Text, LblValue_Date.Caption, TxtDaysEnd.Text, Format(LblValue_Neto.Caption, "##"), Format(LdValue_Double.Caption, "##"), Format(LblValue_Winner.Caption, "##"), Format(LblValue_Subtotal.Caption, "##"), val_Iva, Format(LblValue_Total.Caption, "##"), Format(TxtCast.Text, "##"), Format(LblValue_Sald.Caption, "##"), Id_User)
     'capturamos el numeo de proyecto recien creado de la operacion
     Id_Project = C_Project.Recover_IDProject(GType_operation)
     
@@ -1951,7 +1967,9 @@ Function G_Factura()
         
         LblhelpGeneral.Caption = GType_operation & " realizada con exito!"
         LblhelpGeneral.ForeColor = &H8000&
-        
+        tiempo = 1
+        TimerEnd.Interval = 1000
+        BtnCreate.Visible = False
     Else
         
         LblhelpGeneral.Visible = True
@@ -2000,7 +2018,7 @@ Function export_factura()
     xlsSheet.Range("N22") = Format(LblValue_Subtotal.Caption, "##") 'vr sub total
     xlsSheet.Range("N24") = Format(LblValue_Iva.Caption, "##") 'vr iva
     xlsSheet.Range("N25") = Format(LblValue_Total.Caption, "##") 'vr total
-    xlsSheet.Range("N27") = TxtCast.Text 'vr abono
+    xlsSheet.Range("N27") = Format(TxtCast.Text, "##") 'vr abono
     xlsSheet.Range("N28") = Format(LblValue_Sald.Caption, "##") 'vr saldo
     
     RUTA = App.Path & "\FACTURAS"
@@ -2130,7 +2148,9 @@ Function G_Cotizacion()
         LblhelpGeneral.Caption = GType_operation & " realizada con exito!"
         LblhelpGeneral.ForeColor = &H8000&
         export_cotizacion
-    
+        tiempo = 1
+        TimerEnd.Interval = 1000
+        BtnCreate.Visible = False
     Else
         
         LblhelpGeneral.Visible = True

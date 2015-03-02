@@ -630,6 +630,8 @@ Private Sub TxtValues_Change()
 
     Dim C_Proc As New C_General_Procedures
     
+    Call C_Proc.AddMiles(TxtValues)
+    
     Dim initial As String
     Dim final As String
     
@@ -735,7 +737,7 @@ Private Sub BtnCreate_Click()
         Id_User = C_Proc.Recover_Id("User", "Users", MenuCarpenter.Lbl_Value_User.Caption)
     
         'actualizar el registro seleccionado
-        GUARDAR = C_ListInt.Update_List(G_Id_Provider, UCase(TxtDescription.Text), UCase(TxtValues.Text), Id_User)
+        GUARDAR = C_ListInt.Update_List(G_Id_Provider, UCase(TxtDescription.Text), Format(TxtValues.Text, "##"), Id_User)
     
         'validamos el resultado de la operacion anterior
         If GUARDAR = "OK" Then

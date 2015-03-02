@@ -43,6 +43,10 @@ Begin VB.Form Sale_Easy
       TabIndex        =   12
       Top             =   2520
       Width           =   14775
+      Begin VB.Timer TimerEnd 
+         Left            =   7920
+         Top             =   240
+      End
       Begin VB.TextBox TxtValue 
          Height          =   375
          Left            =   2040
@@ -401,8 +405,7 @@ Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 Public GType_operation As String
 Public Crear_client As String
-
-
+Public tiempo As Long
 
 'INICIO DE FORM operativo
 Private Sub Form_Load()
@@ -541,13 +544,13 @@ Private Sub BtnSearch_Click()
         LbltittleInfo.Caption = "CLIENTE: " & Traer_Datos(0, 0)
          
         'capturamos si hay factura o no
-        Q_Fact = C_Project.Q_Project(GType_operation)
+        Q_fact = C_Project.Q_Project(GType_operation)
         
-        If Q_Fact = 0 Then
+        If Q_fact = 0 Then
          LblNumber.Caption = 1
         Else
-          Q_Fact = Q_Fact + 1
-          LblNumber.Caption = Q_Fact
+          Q_fact = Q_fact + 1
+          LblNumber.Caption = Q_fact
         End If
         
     End If
@@ -603,7 +606,7 @@ Function G_Venta()
     'capturamos el usuario de la operacion
     Id_User = C_Proc.Recover_Id("User", "Users", MenuCarpenter.Lbl_Value_User.Caption)
     'guardamos la factura
-    GUARDAR_P = C_Project.Add_Project(GType_operation, LblNumber.Caption, id, TxtDescripProject.Text, LblValue_Date.Caption, "0", "0", "0", "0", "0", "0", TxtValue.Text, "0", "0", Id_User)
+    GUARDAR_P = C_Project.Add_Project(GType_operation, LblNumber.Caption, id, TxtDescripProject.Text, LblValue_Date.Caption, "0", "0", "0", "0", "0", "0", Format(TxtValue.Text, "##"), "0", "0", Id_User)
     'capturamos el numeo de proyecto recien creado de la operacion
     Id_Project = C_Project.Recover_IDProject(GType_operation)
     
@@ -617,7 +620,9 @@ Function G_Venta()
         LblhelpGeneral.Visible = True
         LblhelpGeneral.Caption = GType_operation & " realizada con exito!"
         LblhelpGeneral.ForeColor = &H8000&
-        
+        BtnCreate.Visible = False
+        tiempo = 1
+        TimerEnd.Interval = 1000
     Else
         
         LblhelpGeneral.Visible = True
@@ -684,12 +689,22 @@ Function ValidateCampos(verificar As Integer) As Integer
 
 End Function
 
+Private Sub TimerEnd_Timer()
+    tiempo = tiempo + 1
+    If tiempo = 2 Then
+      MsgBox "Por su seguridad cerramos la ventana actual"
+      Unload Sale_Easy
+    End If
+End Sub
+
 Private Sub TxtValue_Change()
 
- Dim C_Proc As New C_General_Procedures
+    Dim C_Proc As New C_General_Procedures
     
     Dim initial As String
     Dim final As String
+    
+    Call C_Proc.AddMiles(TxtValue)
     
     initial = TxtValue.Text
     final = C_Proc.Validate_Numeric(initial)
