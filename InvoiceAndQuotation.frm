@@ -4,7 +4,7 @@ Object = "{86CF1D34-0C5F-11D2-A9FC-0000F8754DA1}#2.0#0"; "mscomct2.ocx"
 Begin VB.Form InvoiceAndQuotation 
    BackColor       =   &H00000000&
    BorderStyle     =   1  'Fixed Single
-   ClientHeight    =   10050
+   ClientHeight    =   10470
    ClientLeft      =   15
    ClientTop       =   15
    ClientWidth     =   15210
@@ -14,27 +14,69 @@ Begin VB.Form InvoiceAndQuotation
    MDIChild        =   -1  'True
    MinButton       =   0   'False
    Picture         =   "InvoiceAndQuotation.frx":0000
-   ScaleHeight     =   10050
+   ScaleHeight     =   10470
    ScaleWidth      =   15210
    Begin VB.Timer TimerEnd 
       Left            =   12000
-      Top             =   9480
+      Top             =   9840
    End
    Begin VB.PictureBox FrmOperative 
       BorderStyle     =   0  'None
-      Height          =   3495
+      Height          =   3855
       Left            =   240
       Picture         =   "InvoiceAndQuotation.frx":26EAE
-      ScaleHeight     =   3495
+      ScaleHeight     =   3855
       ScaleWidth      =   14775
       TabIndex        =   39
       Top             =   5880
       Width           =   14775
-      Begin VB.PictureBox FrmDate 
-         Height          =   2895
-         Left            =   8040
+      Begin VB.OptionButton OpDesNot 
+         BackColor       =   &H00400000&
+         Caption         =   "NO"
+         BeginProperty Font 
+            Name            =   "Verdana"
+            Size            =   12
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         ForeColor       =   &H00400000&
+         Height          =   375
+         Left            =   3480
          Picture         =   "InvoiceAndQuotation.frx":4DD5C
-         ScaleHeight     =   2835
+         Style           =   1  'Graphical
+         TabIndex        =   67
+         Top             =   3240
+         Width           =   615
+      End
+      Begin VB.OptionButton OpDesYes 
+         BackColor       =   &H00400000&
+         Caption         =   "SI"
+         BeginProperty Font 
+            Name            =   "Verdana"
+            Size            =   12
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         ForeColor       =   &H00400000&
+         Height          =   375
+         Left            =   2760
+         Picture         =   "InvoiceAndQuotation.frx":4F44F
+         Style           =   1  'Graphical
+         TabIndex        =   66
+         Top             =   3240
+         Width           =   615
+      End
+      Begin VB.PictureBox FrmDate 
+         Height          =   2655
+         Left            =   8040
+         Picture         =   "InvoiceAndQuotation.frx":50B42
+         ScaleHeight     =   2595
          ScaleWidth      =   6555
          TabIndex        =   55
          Top             =   600
@@ -43,7 +85,7 @@ Begin VB.Form InvoiceAndQuotation
             BorderStyle     =   0  'None
             Height          =   1815
             Left            =   0
-            Picture         =   "InvoiceAndQuotation.frx":74C0A
+            Picture         =   "InvoiceAndQuotation.frx":779F0
             ScaleHeight     =   1815
             ScaleWidth      =   3735
             TabIndex        =   59
@@ -196,7 +238,7 @@ Begin VB.Form InvoiceAndQuotation
             BackColor       =   4194304
             Appearance      =   1
             MonthBackColor  =   16777215
-            StartOfWeek     =   101711873
+            StartOfWeek     =   100728833
             TitleBackColor  =   4194304
             TitleForeColor  =   16777215
             TrailingForeColor=   4194304
@@ -250,6 +292,65 @@ Begin VB.Form InvoiceAndQuotation
             Italic          =   0   'False
             Strikethrough   =   0   'False
          EndProperty
+      End
+      Begin VB.Label LblValDescount 
+         Alignment       =   2  'Center
+         BackColor       =   &H00C0C0C0&
+         BorderStyle     =   1  'Fixed Single
+         BeginProperty Font 
+            Name            =   "@Microsoft JhengHei UI"
+            Size            =   14.25
+            Charset         =   0
+            Weight          =   700
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         ForeColor       =   &H00400000&
+         Height          =   375
+         Left            =   5880
+         TabIndex        =   70
+         Top             =   2640
+         Width           =   2055
+      End
+      Begin VB.Label LblDescount 
+         BackStyle       =   0  'Transparent
+         Caption         =   "Descuento"
+         BeginProperty Font 
+            Name            =   "Verdana"
+            Size            =   14.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         ForeColor       =   &H00FFFFFF&
+         Height          =   375
+         Left            =   4320
+         TabIndex        =   69
+         Top             =   2640
+         Width           =   1575
+      End
+      Begin VB.Label LblquestionDescount 
+         Alignment       =   2  'Center
+         BackStyle       =   0  'Transparent
+         Caption         =   "Aplica Descuento?"
+         BeginProperty Font 
+            Name            =   "Verdana"
+            Size            =   14.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         ForeColor       =   &H00FFFFFF&
+         Height          =   375
+         Left            =   0
+         TabIndex        =   68
+         Top             =   3240
+         Width           =   2655
       End
       Begin VB.Label LblSubTotal 
          BackStyle       =   0  'Transparent
@@ -306,7 +407,7 @@ Begin VB.Form InvoiceAndQuotation
          Height          =   375
          Left            =   4440
          TabIndex        =   52
-         Top             =   2640
+         Top             =   3360
          Width           =   2055
       End
       Begin VB.Label LblValue_Total 
@@ -326,7 +427,7 @@ Begin VB.Form InvoiceAndQuotation
          Height          =   375
          Left            =   5880
          TabIndex        =   51
-         Top             =   2640
+         Top             =   3360
          Width           =   2055
       End
       Begin VB.Label LblIva 
@@ -346,7 +447,7 @@ Begin VB.Form InvoiceAndQuotation
          Left            =   4440
          TabIndex        =   50
          Top             =   2160
-         Width           =   2055
+         Width           =   1215
       End
       Begin VB.Label LblValue_Iva 
          Alignment       =   2  'Center
@@ -529,7 +630,7 @@ Begin VB.Form InvoiceAndQuotation
       BorderStyle     =   0  'None
       Height          =   2175
       Left            =   240
-      Picture         =   "InvoiceAndQuotation.frx":9BAB8
+      Picture         =   "InvoiceAndQuotation.frx":9E89E
       ScaleHeight     =   2175
       ScaleWidth      =   14775
       TabIndex        =   26
@@ -566,7 +667,7 @@ Begin VB.Form InvoiceAndQuotation
          ForeColor       =   &H00400000&
          Height          =   375
          Left            =   12120
-         Picture         =   "InvoiceAndQuotation.frx":C2966
+         Picture         =   "InvoiceAndQuotation.frx":C574C
          Style           =   1  'Graphical
          TabIndex        =   29
          Top             =   1440
@@ -587,7 +688,7 @@ Begin VB.Form InvoiceAndQuotation
          ForeColor       =   &H00400000&
          Height          =   375
          Left            =   13200
-         Picture         =   "InvoiceAndQuotation.frx":C4059
+         Picture         =   "InvoiceAndQuotation.frx":C6E3F
          Style           =   1  'Graphical
          TabIndex        =   28
          Top             =   1440
@@ -722,7 +823,7 @@ Begin VB.Form InvoiceAndQuotation
       BorderStyle     =   0  'None
       Height          =   1095
       Left            =   240
-      Picture         =   "InvoiceAndQuotation.frx":C574C
+      Picture         =   "InvoiceAndQuotation.frx":C8532
       ScaleHeight     =   1095
       ScaleWidth      =   14775
       TabIndex        =   13
@@ -872,7 +973,7 @@ Begin VB.Form InvoiceAndQuotation
       BorderStyle     =   0  'None
       Height          =   855
       Left            =   240
-      Picture         =   "InvoiceAndQuotation.frx":EC5FA
+      Picture         =   "InvoiceAndQuotation.frx":EF3E0
       ScaleHeight     =   855
       ScaleWidth      =   14775
       TabIndex        =   9
@@ -929,7 +1030,7 @@ Begin VB.Form InvoiceAndQuotation
       BorderStyle     =   0  'None
       Height          =   735
       Left            =   360
-      Picture         =   "InvoiceAndQuotation.frx":1134A8
+      Picture         =   "InvoiceAndQuotation.frx":11628E
       ScaleHeight     =   735
       ScaleWidth      =   11175
       TabIndex        =   4
@@ -949,7 +1050,7 @@ Begin VB.Form InvoiceAndQuotation
          Height          =   375
          Left            =   8760
          MaskColor       =   &H00FFFFFF&
-         Picture         =   "InvoiceAndQuotation.frx":13A356
+         Picture         =   "InvoiceAndQuotation.frx":13D13C
          Style           =   1  'Graphical
          TabIndex        =   8
          Top             =   240
@@ -957,9 +1058,9 @@ Begin VB.Form InvoiceAndQuotation
       End
       Begin VB.ComboBox CbnSearch 
          Height          =   315
-         ItemData        =   "InvoiceAndQuotation.frx":13BA49
+         ItemData        =   "InvoiceAndQuotation.frx":13E82F
          Left            =   2640
-         List            =   "InvoiceAndQuotation.frx":13BA4B
+         List            =   "InvoiceAndQuotation.frx":13E831
          TabIndex        =   7
          Text            =   "Seleccione..."
          Top             =   240
@@ -980,7 +1081,7 @@ Begin VB.Form InvoiceAndQuotation
          ForeColor       =   &H00400000&
          Height          =   375
          Left            =   1320
-         Picture         =   "InvoiceAndQuotation.frx":13BA4D
+         Picture         =   "InvoiceAndQuotation.frx":13E833
          Style           =   1  'Graphical
          TabIndex        =   6
          Top             =   240
@@ -1000,7 +1101,7 @@ Begin VB.Form InvoiceAndQuotation
          EndProperty
          Height          =   375
          Left            =   0
-         Picture         =   "InvoiceAndQuotation.frx":13D140
+         Picture         =   "InvoiceAndQuotation.frx":13FF26
          Style           =   1  'Graphical
          TabIndex        =   5
          Top             =   240
@@ -1021,10 +1122,10 @@ Begin VB.Form InvoiceAndQuotation
       Height          =   375
       Left            =   12480
       MaskColor       =   &H00FFFFFF&
-      Picture         =   "InvoiceAndQuotation.frx":13E833
+      Picture         =   "InvoiceAndQuotation.frx":141619
       Style           =   1  'Graphical
       TabIndex        =   2
-      Top             =   9480
+      Top             =   9840
       Width           =   2295
    End
    Begin VB.CommandButton BtnExit 
@@ -1040,7 +1141,7 @@ Begin VB.Form InvoiceAndQuotation
       EndProperty
       Height          =   375
       Left            =   13440
-      Picture         =   "InvoiceAndQuotation.frx":13FF26
+      Picture         =   "InvoiceAndQuotation.frx":142D0C
       Style           =   1  'Graphical
       TabIndex        =   1
       Top             =   120
@@ -1059,7 +1160,7 @@ Begin VB.Form InvoiceAndQuotation
       EndProperty
       Height          =   375
       Left            =   11520
-      Picture         =   "InvoiceAndQuotation.frx":141619
+      Picture         =   "InvoiceAndQuotation.frx":1443FF
       Style           =   1  'Graphical
       TabIndex        =   0
       Top             =   120
@@ -1137,7 +1238,7 @@ Begin VB.Form InvoiceAndQuotation
       Height          =   495
       Left            =   240
       TabIndex        =   3
-      Top             =   9480
+      Top             =   9840
       Width           =   11655
    End
 End
